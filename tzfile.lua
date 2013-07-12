@@ -1,0 +1,211 @@
+local gettime = require "luatz.gettime".gettime
+local tz_info_mt = require "luatz.tzinfo".tz_info_mt
+
+local function read_int32be ( fd )
+	local data , err = fd:read ( 4 )
+	if data == nil then return nil , err end
+	local o1 , o2 , o3 , o4 = data:byte ( 1 , 4 )
+
+	local unsigned = o4 + o3*2^8 + o2*2^16 + o1*2^24
+	if unsigned >= 2^31 then
+		return unsigned - 2^32
+	else
+		return unsigned
+	end
+end
+
+local function read_int64be ( fd )
+	local data , err = fd:read ( 8 )
+	if data == nil then return nil , err end
+	local o1 , o2 , o3 , o4 , o5 , o6 , o7 , o8 = data:byte ( 1 , 8 )
+
+	local unsigned = o8 + o7*2^8 + o6*2^16 + o5*2^24 + o4*2^32 + o3*2^40 + o2*2^48 + o1*2^56
+	if unsigned >= 2^63 then
+		return unsigned - 2^64
+	else
+		return unsigned
+	end
+end
+
+local function read_flags ( fd , n )
+	local data , err = fd:read ( n )
+	if data == nil then return nil , err end
+
+	local res = { }
+	for i=1, n do
+		res[i] = data:byte(i,i) ~= 0
+	end
+	return res
+end
+
+local fifteen_nulls = ("\0"):rep(15)
+local function read_tz ( fd )
+	assert ( fd:read(4) == "TZif" )
+	local version = assert ( fd:read(1) )
+	if version == "\0" or version == "2" then
+		local MIN_TIME = -2^32+1
+
+		assert ( assert ( fd:read(15) ) == fifteen_nulls , "Expected 15 nulls" )
+
+		-- The number of UTC/local indicators stored in the file.
+		local tzh_ttisgmtcnt = assert ( read_int32be ( fd ) )
+
+		-- The number of standard/wall indicators stored in the file.
+		local tzh_ttisstdcnt = assert ( read_int32be ( fd ) )
+
+		-- The number of leap seconds for which data is stored in the file.
+		local tzh_leapcnt = assert ( read_int32be ( fd ) )
+
+		-- The number of "transition times" for which data is stored in the file.
+		local tzh_timecnt = assert ( read_int32be ( fd ) )
+
+		-- The number of "local time types" for which data is stored in the file (must not be zero).
+		local tzh_typecnt = assert ( read_int32be ( fd ) )
+
+		-- The number of characters of "timezone abbreviation strings" stored in the file.
+		local tzh_charcnt = assert ( read_int32be ( fd ) )
+
+		local transition_times = { }
+		for i=1, tzh_timecnt do
+			transition_times [ i ] = assert ( read_int32be ( fd ) )
+		end
+		local transition_time_ind = { assert ( fd:read ( tzh_timecnt ) ):byte ( 1 , -1 ) }
+
+		local ttinfos = { }
+		for i=1, tzh_typecnt do
+			ttinfos [ i ] = {
+				gmtoff = assert ( read_int32be ( fd ) ) ;
+				isdst  = assert ( fd:read ( 1 ) ) ~= "\0" ;
+				abbrind = assert ( fd:read ( 1 ) ):byte ( ) ;
+			}
+		end
+
+		local abbreviations = assert ( fd:read ( tzh_charcnt ) )
+
+		local leap_seconds = { }
+		for i=1, tzh_leapcnt do
+			leap_seconds [ i ] = {
+				offset = assert ( read_int32be ( fd ) ) ;
+				n = assert ( read_int32be ( fd ) ) ;
+			}
+		end
+
+		local isstd = assert ( read_flags ( fd , tzh_ttisstdcnt ) )
+
+		local isgmt = assert ( read_flags ( fd , tzh_ttisgmtcnt ) )
+
+		if version == "2" then
+			--[[
+			For version-2-format timezone files, the above header and data is followed by a second header and data,
+			identical in format except that eight bytes are used for each transition time or leap-second time.
+			]]
+			assert ( fd:read(5) == "TZif2" )
+			assert ( assert ( fd:read(15) ) == fifteen_nulls , "Expected 15 nulls" )
+
+			MIN_TIME = -2^64+1
+
+			-- The number of UTC/local indicators stored in the file.
+			tzh_ttisgmtcnt = assert ( read_int32be ( fd ) )
+
+			-- The number of standard/wall indicators stored in the file.
+			tzh_ttisstdcnt = assert ( read_int32be ( fd ) )
+
+			-- The number of leap seconds for which data is stored in the file.
+			tzh_leapcnt = assert ( read_int32be ( fd ) )
+
+			-- The number of "transition times" for which data is stored in the file.
+			tzh_timecnt = assert ( read_int32be ( fd ) )
+
+			-- The number of "local time types" for which data is stored in the file (must not be zero).
+			tzh_typecnt = assert ( read_int32be ( fd ) )
+
+			-- The number of characters of "timezone abbreviation strings" stored in the file.
+			tzh_charcnt = assert ( read_int32be ( fd ) )
+
+			transition_times = { }
+			for i=1, tzh_timecnt do
+				transition_times [ i ] = assert ( read_int64be ( fd ) )
+			end
+			transition_time_ind = { assert ( fd:read ( tzh_timecnt ) ):byte ( 1 , -1 ) }
+
+			ttinfos = { }
+			for i=1, tzh_typecnt do
+				ttinfos [ i ] = {
+					gmtoff = assert ( read_int32be ( fd ) ) ;
+					isdst  = assert ( fd:read ( 1 ) ) ~= "\0" ;
+					abbrind = assert ( fd:read ( 1 ) ):byte ( ) ;
+				}
+			end
+
+			abbreviations = assert ( fd:read ( tzh_charcnt ) )
+
+			leap_seconds = { }
+			for i=1, tzh_leapcnt do
+				leap_seconds [ i ] = {
+					offset = assert ( read_int64be ( fd ) ) ;
+					n = assert ( read_int32be ( fd ) ) ;
+				}
+			end
+
+			isstd = assert ( read_flags ( fd , tzh_ttisstdcnt ) )
+
+			isgmt = assert ( read_flags ( fd , tzh_ttisgmtcnt ) )
+
+			--[[
+			After the second header and data comes a newline-enclosed, POSIX-TZ-environment-variable-style string
+			for use in handling instants after the last transition time stored in the file
+			(with nothing between the newlines if there is no POSIX representation for such instants).
+			]]
+		end
+
+		for i=1, tzh_typecnt do
+			local v = ttinfos [ i ]
+			v.abbr = abbreviations:sub ( v.abbrind+1 , v.abbrind+3 )
+			v.isstd = isstd [ i ] or false
+			v.isgmt = isgmt [ i ] or false
+		end
+
+		--[[
+		Use the first standard-time ttinfo structure in the file
+		(or simply the first ttinfo structure in the absence of a standard-time structure)
+		if either tzh_timecnt is zero or the time argument is less than the first transition time recorded in the file.
+		]]
+		local first = 1
+		do
+			for i=1, tzh_ttisstdcnt do
+				if isstd[i] then
+					first = i
+					break
+				end
+			end
+		end
+
+		local res = {
+			[0] = {
+				transition_time = MIN_TIME ;
+				info = ttinfos [ first ] ;
+			}
+		}
+		for i=1, tzh_timecnt do
+			res [ i ] = {
+				transition_time = transition_times [ i ] ;
+				info = ttinfos [ transition_time_ind [ i ]+1 ] ;
+			}
+		end
+		return setmetatable ( res , tz_info_mt )
+	else
+		error ( "Unsupported version" )
+	end
+end
+
+local function read_tzfile ( path )
+	local fd = assert ( io.open ( path ) )
+	local tzinfo = read_tz ( fd )
+	fd:close ( )
+	return tzinfo
+end
+
+return {
+	read_tz = read_tz ;
+	read_tzfile = read_tzfile ;
+}

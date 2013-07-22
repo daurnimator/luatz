@@ -11,7 +11,7 @@ local function _find_current ( tzinfo , target , i , j )
 
 	local half = math.ceil ( (j+i) / 2 )
 
-	if target > tzinfo [ half ].transition_time then
+	if target >= tzinfo [ half ].transition_time then
 		return _find_current ( tzinfo , target , half , j )
 	else
 		return _find_current ( tzinfo , target , i , half-1 )

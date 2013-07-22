@@ -1,4 +1,3 @@
-local gettime = require "luatz.gettime".gettime
 local tz_info_mt = require "luatz.tzinfo".tz_info_mt
 
 local function read_int32be ( fd )

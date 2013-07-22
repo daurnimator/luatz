@@ -1,3 +1,5 @@
+local gettime = require "luatz.gettime".gettime
+
 local tz_info_methods = { }
 local tz_info_mt = {
 	__index = tz_info_methods ;

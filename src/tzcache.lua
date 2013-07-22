@@ -16,6 +16,7 @@ end
 
 local function get_tz ( name )
 	local path = name_to_zoneinfo_path ( name )
+	-- TODO: stat path
 	local tzinfo = tz_cache [ path ]
 	if tzinfo == nil then
 		tzinfo = read_tzfile ( path )

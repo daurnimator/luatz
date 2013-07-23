@@ -63,13 +63,17 @@ local function increment ( tens , units , base )
 	return tens , units
 end
 
+local function unpack_tm ( tm )
+	return assert ( tm.year  , "year required" ) ,
+		assert ( tm.month , "month required" ) ,
+		assert ( tm.day   , "day required" ) ,
+		tm.hour or 12 ,
+		tm.min  or 0 ,
+		tm.sec  or 0
+end
+
 local function normalise ( tm )
-	local sec   = tm.sec  or 0
-	local min   = tm.min  or 0
-	local hour  = tm.hour or 12
-	local day   = assert ( tm.day   , "day required" )
-	local month = assert ( tm.month , "month required" )
-	local year  = assert ( tm.year  , "year required" )
+	local year , month , day , hour , min , sec = unpack_tm ( tm )
 
 	min  , sec  = increment ( min  , sec  , 60 ) -- TODO: consider leap seconds?
 	hour , min  = increment ( hour , min  , 60 )

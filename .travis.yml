@@ -1,11 +1,8 @@
 language: c
 
 before_install:
-  - sudo apt-get install lua5.1 lua5.2 luajit -y
-  - sudo apt-get install luarocks -y
+  - sudo apt-get install lua5.1 luarocks -y
   - sudo luarocks install busted
 
 script:
-  - busted -l lua5.1
-  - busted -l lua5.2
-  - busted -l luajit
+  - busted

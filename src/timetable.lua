@@ -72,9 +72,8 @@ local function unpack_tm ( tm )
 		tm.sec  or 0
 end
 
-local function normalise ( tm )
-	local year , month , day , hour , min , sec = unpack_tm ( tm )
-
+-- Modify parameters so they all fit within the "normal" range
+local function normalise ( year , month , day , hour , min , sec )
 	min  , sec  = increment ( min  , sec  , 60 ) -- TODO: consider leap seconds?
 	hour , min  = increment ( hour , min  , 60 )
 	day  , hour = increment ( day  , hour , 24 )
@@ -96,22 +95,32 @@ local function normalise ( tm )
 	year , month = increment ( year , month - 1 , 12 )
 	month = month + 1
 
-	tm.sec   = sec
-	tm.min   = min
-	tm.hour  = hour
-	tm.day   = day
-	tm.month = month
-	tm.year  = year
+	return year , month , day , hour , min , sec
+end
+
+
+local timetable_methods = { }
+
+function timetable_methods:normalise ( )
+	local year , month , day
+	year , month , day , self.hour , self.min , self.sec = normalise ( unpack_tm ( self ) )
+
+	self.day   = day
+	self.month = month
+	self.year  = year
 
 	local yday = day_of_year ( day , month , year )
 	local wday = day_of_week ( yday , year )
 
-	tm.yday = yday
-	tm.wday = wday
+	self.yday = yday
+	self.wday = wday
 
-	return tm
+	return self
 end
+timetable_methods.normalize = timetable_methods.normalise -- American English
+
 local timetable_mt = {
+	__index    = timetable_methods ;
 }
 
 local function cast_timetable ( tm )

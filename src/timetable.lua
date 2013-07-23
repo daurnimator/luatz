@@ -98,6 +98,17 @@ local function normalise ( year , month , day , hour , min , sec )
 	return year , month , day , hour , min , sec
 end
 
+local function timestamp ( year , month , day , hour , min , sec )
+	return 60*60*24*(
+			year * year_length ( year )
+			+ month * month_length ( month , year )
+			+ day
+		)
+		+ hour  * (60*60)
+		+ min   * 60
+		+ sec
+end
+
 
 local timetable_methods = { }
 
@@ -118,6 +129,10 @@ function timetable_methods:normalise ( )
 	return self
 end
 timetable_methods.normalize = timetable_methods.normalise -- American English
+
+function timetable_methods:timestamp ( )
+	return timestamp ( unpack_tm ( self ) )
+end
 
 local timetable_mt = {
 	__index    = timetable_methods ;
@@ -141,6 +156,7 @@ end
 return {
 	doomsday  = doomsday ;
 	normalise = normalise ;
+	timestamp = timestamp ;
 
 	new = new_timetable ;
 	cast = cast_timetable ;

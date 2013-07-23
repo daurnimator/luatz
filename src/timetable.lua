@@ -136,6 +136,9 @@ end
 
 local timetable_mt = {
 	__index    = timetable_methods ;
+	__eq = function ( a , b )
+		return a:timestamp() < b:timestamp()
+	end ;
 }
 
 local function cast_timetable ( tm )

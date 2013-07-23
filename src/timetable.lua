@@ -111,8 +111,29 @@ local function normalise ( tm )
 
 	return tm
 end
+local timetable_mt = {
+}
+
+local function cast_timetable ( tm )
+	return setmetatable ( tm , timetable_mt )
+end
+
+local function new_timetable ( year , month , day , hour , min , sec )
+	return cast_timetable {
+		year  = year ;
+		month = month ;
+		day   = day ;
+		hour  = hour ;
+		min   = min ;
+		sec   = sec ;
+	}
+end
 
 return {
 	doomsday  = doomsday ;
 	normalise = normalise ;
+
+	new = new_timetable ;
+	cast = cast_timetable ;
+	timetable_mt = timetable_mt ;
 }

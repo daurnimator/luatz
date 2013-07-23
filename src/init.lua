@@ -5,6 +5,7 @@ local function gettimein ( tz , now )
 end
 
 return {
-	get_tz = get_tz ;
+	get_tz    = get_tz ;
+	gettime   = require "luatz.gettime".gettime ;
 	gettimein = gettimein ;
 }

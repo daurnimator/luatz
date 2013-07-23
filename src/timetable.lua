@@ -134,8 +134,14 @@ function timetable_methods:timestamp ( )
 	return timestamp ( unpack_tm ( self ) )
 end
 
+function timetable_methods:rfc_3339 ( )
+	-- %06.4g gives 3 (=6-4+1) digits after decimal
+	return strformat ( "%04u-%02u-%02uT%02u:%02u:%06.4g" , unpack_tm ( self ) )
+end
+
 local timetable_mt = {
 	__index    = timetable_methods ;
+	__tostring = timetable_methods.rfc_3339 ;
 	__eq = function ( a , b )
 		return a:timestamp() < b:timestamp()
 	end ;

@@ -22,10 +22,11 @@ source = {
 build = {
 	type = "builtin" ;
 	modules = {
-		["luatz.init"]    = "src/init.lua" ;
-		["luatz.gettime"] = "src/gettime.lua" ;
-		["luatz.tzcache"] = "src/tzcache.lua" ;
-		["luatz.tzfile"]  = "src/tzfile.lua" ;
-		["luatz.tzinfo"]  = "src/tzinfo.lua" ;
+		["luatz.init"]      = "src/init.lua" ;
+		["luatz.gettime"]   = "src/gettime.lua" ;
+		["luatz.timetable"] = "src/timetable.lua" ;
+		["luatz.tzcache"]   = "src/tzcache.lua" ;
+		["luatz.tzfile"]    = "src/tzfile.lua" ;
+		["luatz.tzinfo"]    = "src/tzinfo.lua" ;
 	} ;
 }

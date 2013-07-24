@@ -11,14 +11,16 @@ describe ( "Time table library" , function ( )
 		assert.are.same ( 5 , doomsday(1968) )
 	end )
 
+	local function native_normalise ( year , month , day )
+		return os.date("*t",os.time{
+			year = year ;
+			month = month ;
+			day = day ;
+		})
+	end
+
 	it ( "Get day of week correct" , function ( )
-		local function native_normalise ( year , month , day )
-			return os.date("*t",os.time{
-				year = year ;
-				month = month ;
-				day = day ;
-			})
-		end
+
 		local function assert_same_wday ( year , month , day )
 			return assert.are.same (
 				native_normalise ( year , month , day ).wday ,

@@ -151,6 +151,9 @@ local timetable_mt = {
 	__index    = timetable_methods ;
 	__tostring = timetable_methods.rfc_3339 ;
 	__eq = function ( a , b )
+		return a:timestamp() == b:timestamp()
+	end ;
+	__lt = function ( a , b )
 		return a:timestamp() < b:timestamp()
 	end ;
 }

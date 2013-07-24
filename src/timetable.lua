@@ -173,12 +173,17 @@ local function new_timetable ( year , month , day , hour , min , sec )
 	}
 end
 
+local function new_from_timestamp ( ts )
+	return new_timetable ( 1970 , 1 , 1 , 0 , 0 , ts )
+end
+
 return {
 	doomsday  = doomsday ;
 	normalise = normalise ;
 	timestamp = timestamp ;
 
 	new = new_timetable ;
+	new_from_timestamp = new_from_timestamp ;
 	cast = cast_timetable ;
 	timetable_mt = timetable_mt ;
 }

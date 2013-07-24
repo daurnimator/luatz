@@ -27,9 +27,13 @@ local function month_length ( m , y )
 	end
 end
 
+local function leap_years_since ( year )
+	return idiv ( year , 4 ) - idiv ( year , 100 ) + idiv ( year , 400 )
+end
+
 local function doomsday ( year )
 	return ( 3 -- Tuesday
-		- 1 + year + idiv ( year , 4 ) - idiv ( year , 100 ) + idiv ( year , 400 ) )
+		- 1 + year + leap_years_since ( year ) )
 		% 7 + 1
 end
 local doomsday_cache = setmetatable ( { } , {

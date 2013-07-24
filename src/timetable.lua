@@ -102,12 +102,16 @@ local function normalise ( year , month , day , hour , min , sec )
 	return year , month , day , hour , min , sec
 end
 
+local leap_years_since_1970 = leap_years_since ( 1970 )
 local function timestamp ( year , month , day , hour , min , sec )
-	return 60*60*24*(
-			year * year_length ( year )
-			+ month * month_length ( month , year )
-			+ day
-		)
+	year , month , day , hour , min , sec = normalise ( year , month , day , hour , min , sec )
+
+	local days_since_epoch = day_of_year ( day , month , year )
+		+ 365 * ( year - 1970 )
+		-- Each leap year adds one day
+		+ ( leap_years_since ( year - 1 ) - leap_years_since_1970 ) - 1
+
+	return days_since_epoch * 60*60*24
 		+ hour  * (60*60)
 		+ min   * 60
 		+ sec

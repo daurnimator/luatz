@@ -112,7 +112,7 @@ local function timestamp ( year , month , day , hour , min , sec )
 		-- Each leap year adds one day
 		+ ( leap_years_since ( year - 1 ) - leap_years_since_1970 ) - 1
 
-	return days_since_epoch * 60*60*24
+	return days_since_epoch * (60*60*24)
 		+ hour  * (60*60)
 		+ min   * 60
 		+ sec

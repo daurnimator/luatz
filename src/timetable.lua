@@ -1,3 +1,4 @@
+local strformat = string.format
 local floor = math.floor
 local function idiv ( n , d )
 	return floor ( n / d )

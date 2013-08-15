@@ -21,6 +21,7 @@ local function year_length ( y )
 end
 
 local function month_length ( m , y )
+	m = ( m - 1 ) % 12 + 1
 	if m == 2 then
 		return is_leap ( y ) and 29 or 28
 	else

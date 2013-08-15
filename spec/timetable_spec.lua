@@ -49,5 +49,9 @@ describe ( "Time table library" , function ( )
 				assert.same ( native_timestamp ( y,m,1 ) , timetable.timestamp(y,m,1,0,0,0) )
 			end
 		end
-	end)
+	end )
+
+	it ( "Out of range month is normalised" , function ( )
+		assert.same ( { timetable.normalise(2013,0,1,0,0,0) } , { 2012,12,1,0,0,0 } )
+	end )
 end )

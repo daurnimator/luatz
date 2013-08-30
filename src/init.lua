@@ -8,4 +8,5 @@ return {
 	get_tz    = get_tz ;
 	gettime   = require "luatz.gettime".gettime ;
 	gettimein = gettimein ;
+	timetable = require "luatz.timetable" ;
 }

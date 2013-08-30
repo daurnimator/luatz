@@ -75,7 +75,9 @@ local function unpack_tm ( tm )
 		assert ( tm.day   , "day required" ) ,
 		tm.hour or 12 ,
 		tm.min  or 0 ,
-		tm.sec  or 0
+		tm.sec  or 0 ,
+		tm.yday ,
+		tm.wday
 end
 
 -- Modify parameters so they all fit within the "normal" range
@@ -164,7 +166,7 @@ local function cast_timetable ( tm )
 	return setmetatable ( tm , timetable_mt )
 end
 
-local function new_timetable ( year , month , day , hour , min , sec )
+local function new_timetable ( year , month , day , hour , min , sec , yday , wday )
 	return cast_timetable {
 		year  = year ;
 		month = month ;
@@ -172,6 +174,8 @@ local function new_timetable ( year , month , day , hour , min , sec )
 		hour  = hour ;
 		min   = min ;
 		sec   = sec ;
+		yday  = yday ;
+		wday  = wday ;
 	}
 end
 

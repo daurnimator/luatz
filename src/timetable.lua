@@ -179,6 +179,10 @@ local function new_timetable ( year , month , day , hour , min , sec , yday , wd
 	}
 end
 
+function timetable_methods:clone ( )
+	return new_timetable ( unpack_tm ( self ) )
+end
+
 local function new_from_timestamp ( ts )
 	return new_timetable ( 1970 , 1 , 1 , 0 , 0 , ts )
 end

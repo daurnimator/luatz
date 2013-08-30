@@ -21,7 +21,6 @@ local function year_length ( y )
 end
 
 local function month_length ( m , y )
-	m = ( m - 1 ) % 12 + 1
 	if m == 2 then
 		return is_leap ( y ) and 29 or 28
 	else
@@ -91,17 +90,22 @@ local function normalise ( year , month , day , hour , min , sec )
 		day  = day + year_length ( year )
 	end
 
+	-- Lua months start from 1, need -1 and +1 around this increment
+	month = month - 1
+	year , month = increment ( year , month , 12 )
+	month = month + 1
+
 	-- This could potentially be slow if `day` is very large
 	while true do
 		local i = month_length ( month , year )
 		if day <= i then break end
 		day = day - i
 		month = month + 1
+		if month > 12 then
+			month = 1
+			year = year + 1
+		end
 	end
-
-	-- Lua months start from 1, need -1 and +1 around this increment
-	year , month = increment ( year , month - 1 , 12 )
-	month = month + 1
 
 	return year , month , day , hour , min , sec
 end

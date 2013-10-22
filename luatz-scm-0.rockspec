@@ -24,6 +24,7 @@ build = {
 	modules = {
 		["luatz.init"]      = "luatz/init.lua" ;
 		["luatz.gettime"]   = "luatz/gettime.lua" ;
+		["luatz.parse"]     = "luatz/parse.lua" ;
 		["luatz.timetable"] = "luatz/timetable.lua" ;
 		["luatz.tzcache"]   = "luatz/tzcache.lua" ;
 		["luatz.tzfile"]    = "luatz/tzfile.lua" ;

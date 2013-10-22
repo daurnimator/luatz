@@ -1,5 +1,5 @@
 describe ( "Time table library" , function ( )
-	local timetable = require "timetable"
+	local timetable = require "luatz.timetable"
 
 	it ( "Doomsday calculation" , function ( )
 		local doomsday = timetable.doomsday

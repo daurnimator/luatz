@@ -1,12 +1,14 @@
 local read_tzfile = require "luatz.tzfile".read_tzfile
 
+local base_zoneinfo_path = "/usr/share/zoneinfo/"
+local local_zoneinfo_path = "/etc/localtime"
 local tz_cache = { }
 
 local function name_to_zoneinfo_path ( name )
 	if name then
-		return "/usr/share/zoneinfo/" .. name
+		return base_zoneinfo_path .. name
 	else
-		return "/etc/localtime"
+		return local_zoneinfo_path
 	end
 end
 

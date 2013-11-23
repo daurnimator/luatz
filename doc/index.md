@@ -17,7 +17,9 @@ See `gettime` for more information.
 ## `get_tz ( timezone_name )`
 
 Returns a timezone object (see `tzinfo` documentation) for the given `timezone_name`.
-This uses the local zoneinfo database; names are usually of the form `Country/Largest_City`.
+This uses the local [zoneinfo database](https://www.iana.org/time-zones); 
+names are usually of the form `Country/Largest_City`. 
+Check [wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for an example list.
 
 
 ## `time_in ( timezone_name [, utc_ts] )`

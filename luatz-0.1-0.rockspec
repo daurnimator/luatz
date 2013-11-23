@@ -1,5 +1,5 @@
 package = "luatz"
-version = "scm-0"
+version = "0.1-0"
 
 description = {
 	summary = "This is a lua library for time and date manipulation." ;
@@ -17,7 +17,7 @@ dependencies = {
 }
 
 source = {
-	url = "git://github.com/daurnimator/luatz.git" ;
+	url = "https://github.com/daurnimator/luatz/archive/v0.1.tar.gz" ;
 }
 
 build = {

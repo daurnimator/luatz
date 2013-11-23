@@ -60,7 +60,7 @@ function tz_info_methods:localize ( utc_ts )
 	return utc_ts + self:find_current ( utc_ts ).gmtoff
 end
 
-function tz_info_methods:utctime ( ts_local , is_dst )
+function tz_info_methods:utctime ( ts_local )
 	local tz1 , tz2 = find_current_local ( self , ts_local )
 	tz1 = self [ tz1 ].info
 	if tz2 == nil then

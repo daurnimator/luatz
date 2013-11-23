@@ -3,9 +3,9 @@
 A module to get the current time.
 
 
-## `gettime`
+## `gettime ( )`
 
 Uses the most accurate method available (in order:)
 
-  - Uses luasocket's `socket.gettime` if available
+  - luasocket's `socket.gettime`
   - `os.time`

@@ -6,7 +6,7 @@ describe ( "Time parsing library" , function ( )
 		assert.same ( timetable.new(2013,10,22,14,17,02) , (parse.rfc_3339 "2013-10-22T14:17:02Z") )
 
 		-- Numeric offsets accepted
-		assert.same ( { timetable.new(2013,10,22,14,17,02) , 10*60 } , { parse.rfc_3339 "2013-10-22T14:17:02+10:00" } )
+		assert.same ( { timetable.new(2013,10,22,14,17,02) , 10*3600 } , { parse.rfc_3339 "2013-10-22T14:17:02+10:00" } )
 
 		-- Missing offsets parse
 		assert.same ( timetable.new(2013,10,22,14,17,02) , (parse.rfc_3339 "2013-10-22T14:17:02") )

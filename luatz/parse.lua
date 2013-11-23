@@ -25,7 +25,7 @@ local function rfc_3339 ( str , init )
 	else
 		local hour_offset , min_offset = str:match ( "^([+-]%d%d):(%d%d)" , patt_end )
 		if hour_offset then
-			tz_offset = tonumber ( hour_offset )*60 + tonumber ( min_offset )
+			tz_offset = tonumber ( hour_offset ) * 3600 + tonumber ( min_offset ) * 60
 		else
 			-- Invalid RFC 3339 timestamp offset (should be Z or (+/-)hour:min
 			-- tz_offset will be nil

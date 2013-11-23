@@ -17,7 +17,7 @@ local function rfc_3339 ( str , init )
 	min   = tonumber ( min )
 	sec   = tonumber ( sec )
 
-	local tt = new_timetable ( year , month , day ,	hour , min , sec )
+	local tt = new_timetable ( year , month , day , hour , min , sec )
 
 	local tz_offset
 	if str:match ("^[Zz]" , patt_end ) then

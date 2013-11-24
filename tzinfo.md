@@ -27,7 +27,7 @@ a `info` table, which contains information about the change at that point:
 Returns the relevant `info` table at the given utc timestamp for the given UTC timestamp.
 
 
-## `:localize ( utc_ts )`
+## `:localise ( utc_ts )` and `:localize ( utc_ts )`
 
 Convert the given UTC timestamp to the timezone.
 Returns the number of seconds since unix epoch in the given timezone.

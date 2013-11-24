@@ -10,7 +10,7 @@ The table includes the following sub modules, which have their own documentation
 
 ## `time ( )`
 
-Returns the current unix timestamp using the most accurate source available.
+Returns the current unix timestamp using the most precise source available.
 See `gettime` for more information.
 
 

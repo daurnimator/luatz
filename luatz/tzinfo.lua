@@ -55,10 +55,11 @@ function tz_info_methods:find_current ( current )
 	return self [ _find_current ( self , current , 0 , #self ) ].info
 end
 
-function tz_info_methods:localize ( utc_ts )
+function tz_info_methods:localise ( utc_ts )
 	utc_ts = utc_ts or gettime ( )
 	return utc_ts + self:find_current ( utc_ts ).gmtoff
 end
+tz_info_methods.localize = tz_info_methods.localise
 
 function tz_info_methods:utctime ( ts_local )
 	local tz1 , tz2 = find_current_local ( self , ts_local )

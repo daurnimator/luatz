@@ -13,7 +13,10 @@ so the following details can be skipped over.
 
 The table contains a sequence of tables that describe the timezone at a given point
 using a `transition_time`: the unix timestamp (in UTC) that this definition starts, and
-a `info` table, which contains information about the change at that point:
+a `tt_info` object.
+
+A `tt_info` object contains information about a time offset;
+and contains the following fields:
 
   - `gmtoff` (number) The offset from GMT (UTC) in seconds
   - `isdst` (boolean): If this change was declared as daylight savings
@@ -22,9 +25,10 @@ a `info` table, which contains information about the change at that point:
   - `isstd` (boolean)
   - `isgmt` (boolean)
 
+
 ## `:find_current ( utc_ts )`
 
-Returns the relevant `info` table at the given utc timestamp for the given UTC timestamp.
+Returns the relevant `tt_info` object for the given UTC timestamp in the timezone.
 
 
 ## `:localise ( utc_ts )` and `:localize ( utc_ts )`

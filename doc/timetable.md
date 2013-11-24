@@ -58,3 +58,8 @@ The ranges of components are not checked, and if you want a valid timestamp, `:n
 
 Returns the timetable as the number of seconds since unix epoch (1970-01-01) as a lua 
 number.
+
+
+## `:unpack ( )`
+
+Unpacks the timetable object; returns `year`, `month`, `day`, `hour`, `min`, `sec`, `yday`, `wday`

@@ -5,6 +5,9 @@ local tz_info_mt = {
 	__index = tz_info_methods ;
 }
 local tt_info_mt = {
+	__tostring = function ( self )
+		return string.format ( "tt_info:%s=%d" , self.abbr , self.gmtoff )
+	end ;
 }
 
 -- Binary search

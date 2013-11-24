@@ -151,8 +151,8 @@ function timetable_methods:timestamp ( )
 end
 
 function timetable_methods:rfc_3339 ( )
-	-- %06.4g gives 3 (=6-4+1) digits after decimal
-	return strformat ( "%04u-%02u-%02uT%02u:%02u:%06.4g" , self:unpack ( ) )
+	-- %06.3f gives 3 (=6-3) digits after decimal
+	return strformat ( "%04u-%02u-%02uT%02u:%02u:%06.3f" , self:unpack ( ) )
 end
 
 local timetable_mt

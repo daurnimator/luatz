@@ -39,7 +39,7 @@ end
 
 local fifteen_nulls = ("\0"):rep(15)
 local function read_tz ( fd )
-	assert ( fd:read(4) == "TZif" )
+	assert ( fd:read(4) == "TZif" , "Invalid TZ file" )
 	local version = assert ( fd:read(1) )
 	if version == "\0" or version == "2" then
 		local MIN_TIME = -2^32+1
@@ -198,7 +198,7 @@ local function read_tz ( fd )
 end
 
 local function read_tzfile ( path )
-	local fd = assert ( io.open ( path ) )
+	local fd = assert ( io.open ( path , "rb" ) )
 	local tzinfo = read_tz ( fd )
 	fd:close ( )
 	return tzinfo

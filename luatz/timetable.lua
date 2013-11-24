@@ -68,17 +68,6 @@ local function increment ( tens , units , base )
 	return tens , units
 end
 
-local function unpack_tm ( tm )
-	return assert ( tm.year  , "year required" ) ,
-		assert ( tm.month , "month required" ) ,
-		assert ( tm.day   , "day required" ) ,
-		tm.hour or 12 ,
-		tm.min  or 0 ,
-		tm.sec  or 0 ,
-		tm.yday ,
-		tm.wday
-end
-
 -- Modify parameters so they all fit within the "normal" range
 local function normalise ( year , month , day , hour , min , sec )
 	min  , sec  = increment ( min  , sec  , 60 ) -- TODO: consider leap seconds?
@@ -128,9 +117,20 @@ end
 
 local timetable_methods = { }
 
+function timetable_methods:unpack ( )
+	return assert ( self.year  , "year required" ) ,
+		assert ( self.month , "month required" ) ,
+		assert ( self.day   , "day required" ) ,
+		self.hour or 12 ,
+		self.min  or 0 ,
+		self.sec  or 0 ,
+		self.yday ,
+		self.wday
+end
+
 function timetable_methods:normalise ( )
 	local year , month , day
-	year , month , day , self.hour , self.min , self.sec = normalise ( unpack_tm ( self ) )
+	year , month , day , self.hour , self.min , self.sec = normalise ( self:unpack ( ) )
 
 	self.day   = day
 	self.month = month
@@ -147,12 +147,12 @@ end
 timetable_methods.normalize = timetable_methods.normalise -- American English
 
 function timetable_methods:timestamp ( )
-	return timestamp ( unpack_tm ( self ) )
+	return timestamp ( self:unpack ( ) )
 end
 
 function timetable_methods:rfc_3339 ( )
 	-- %06.4g gives 3 (=6-4+1) digits after decimal
-	return strformat ( "%04u-%02u-%02uT%02u:%02u:%06.4g" , unpack_tm ( self ) )
+	return strformat ( "%04u-%02u-%02uT%02u:%02u:%06.4g" , self:unpack ( ) )
 end
 
 local timetable_mt
@@ -193,7 +193,7 @@ local function new_timetable ( year , month , day , hour , min , sec , yday , wd
 end
 
 function timetable_methods:clone ( )
-	return new_timetable ( unpack_tm ( self ) )
+	return new_timetable ( self:unpack ( ) )
 end
 
 local function new_from_timestamp ( ts )

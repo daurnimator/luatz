@@ -4,6 +4,8 @@ local tz_info_methods = { }
 local tz_info_mt = {
 	__index = tz_info_methods ;
 }
+local tt_info_mt = {
+}
 
 -- Binary search
 local function _find_current ( tzinfo , target , i , j )
@@ -75,4 +77,5 @@ end
 
 return {
 	tz_info_mt = tz_info_mt ;
+	tt_info_mt = tt_info_mt ;
 }

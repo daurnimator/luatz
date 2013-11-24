@@ -1,4 +1,6 @@
 local tz_info_mt = require "luatz.tzinfo".tz_info_mt
+local tt_info_mt = require "luatz.tzinfo".tt_info_mt
+
 
 local function read_int32be ( fd )
 	local data , err = fd:read ( 4 )
@@ -162,6 +164,7 @@ local function read_tz ( fd )
 			v.abbr = abbreviations:sub ( v.abbrind+1 , v.abbrind+3 )
 			v.isstd = isstd [ i ] or false
 			v.isgmt = isgmt [ i ] or false
+			setmetatable ( v , tt_info_mt )
 		end
 
 		--[[

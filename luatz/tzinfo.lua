@@ -2,10 +2,10 @@ local gettime = require "luatz.gettime".gettime
 local timetable_mt = require "luatz.timetable".timetable_mt
 
 local function to_timestamp ( o )
-	if type ( ts_local ) == "number" then
-		return ts_local
+	if type ( o ) == "number" then
+		return o
 	elseif getmetatable ( o ) == timetable_mt then
-		return ts_local:timestamp ( )
+		return o:timestamp ( )
 	end
 end
 

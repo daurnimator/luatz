@@ -1,16 +1,6 @@
 describe ( "Time table library" , function ( )
 	local timetable = require "luatz.timetable"
 
-	it ( "Doomsday calculation" , function ( )
-		local doomsday = timetable.doomsday
-
-		-- Doomsday in Gregorian calendar for 2013 is Thursday.
-		assert.are.same ( 5 , doomsday(2013) )
-
-		assert.are.same ( 3 , doomsday(1967) )
-		assert.are.same ( 5 , doomsday(1968) )
-	end )
-
 	local function native_normalise ( year , month , day )
 		return os.date("*t",os.time{
 			year = year ;
@@ -35,6 +25,9 @@ describe ( "Time table library" , function ( )
 		assert_same_wday ( 2013 , 7 , 27 )
 		assert_same_wday ( 2013 , 7 , 28 )
 		assert_same_wday ( 2013 , 7 , 29 )
+		assert_same_wday ( 2014 , 1 , 1 )
+		assert_same_wday ( 2014 , 1 , 6 )
+		assert_same_wday ( 2016 , 2 , 28 )
 	end )
 
 	local function native_timestamp ( year , month , day )

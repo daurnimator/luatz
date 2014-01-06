@@ -11,6 +11,8 @@ local months_to_days_cumulative = { 0 }
 for i = 2, 12 do
 	months_to_days_cumulative [ i ] = months_to_days_cumulative [ i-1 ] + mon_lengths [ i-1 ]
 end
+-- For Sakamoto's Algorithm (day of week)
+local sakamoto = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
 
 local function is_leap ( y )
 	return (y % 4) == 0 and (y % 100) ~= 0 or (y % 400) == 0
@@ -32,19 +34,6 @@ local function leap_years_since ( year )
 	return idiv ( year , 4 ) - idiv ( year , 100 ) + idiv ( year , 400 )
 end
 
-local function doomsday ( year )
-	return ( 3 -- Tuesday
-		- 1 + year + leap_years_since ( year ) )
-		% 7 + 1
-end
-local doomsday_cache = setmetatable ( { } , {
-	__index = function ( cache , year )
-		local d = doomsday ( year )
-		cache [ year ] = d
-		return d
-	end ;
-} )
-
 local function day_of_year ( day , month , year )
 	local yday = months_to_days_cumulative [ month ]
 	if month > 2 and is_leap ( year ) then
@@ -53,8 +42,11 @@ local function day_of_year ( day , month , year )
 	return yday + day
 end
 
-local function day_of_week ( yday , year )
-	return ( yday - doomsday_cache [ year ] - 1 ) % 7 + 1
+local function day_of_week ( day , month , year )
+	if month < 3 then
+		year = year - 1
+	end
+	return ( year + leap_years_since ( year ) + sakamoto[month] + day ) % 7 + 1
 end
 
 local function increment ( tens , units , base )
@@ -135,12 +127,8 @@ function timetable_methods:normalise ( )
 	self.day   = day
 	self.month = month
 	self.year  = year
-
-	local yday = day_of_year ( day , month , year )
-	local wday = day_of_week ( yday , year )
-
-	self.yday = yday
-	self.wday = wday
+	self.yday  = day_of_year ( day , month , year )
+	self.wday  = day_of_week ( day , month , year )
 
 	return self
 end
@@ -201,7 +189,8 @@ local function new_from_timestamp ( ts )
 end
 
 return {
-	doomsday  = doomsday ;
+	day_of_year = day_of_year ;
+	day_of_week = day_of_week ;
 	normalise = normalise ;
 	timestamp = timestamp ;
 

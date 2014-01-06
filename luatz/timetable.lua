@@ -143,23 +143,14 @@ function timetable_methods:rfc_3339 ( )
 	return strformat ( "%04u-%02u-%02uT%02u:%02u:%06.3f" , self:unpack ( ) )
 end
 
-local timetable_mt
-
-local function coerce_arg ( t )
-	if getmetatable ( t ) == timetable_mt then
-		return t:timestamp ( )
-	end
-	return t
-end
-
-timetable_mt = {
+local timetable_mt = {
 	__index    = timetable_methods ;
 	__tostring = timetable_methods.rfc_3339 ;
 	__eq = function ( a , b )
-		return coerce_arg ( a ) == coerce_arg ( b )
+		return a:timestamp ( ) == b:timestamp ( )
 	end ;
 	__lt = function ( a , b )
-		return coerce_arg ( a ) < coerce_arg ( b )
+		return a:timestamp ( ) < b:timestamp ( )
 	end ;
 }
 

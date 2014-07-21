@@ -27,6 +27,7 @@ build = {
 		["luatz.gettime"]   = "luatz/gettime.lua" ;
 		["luatz.parse"]     = "luatz/parse.lua" ;
 		["luatz.timetable"] = "luatz/timetable.lua" ;
+		["luatz.strftime"]  = "luatz/strftime.lua" ;
 		["luatz.tzcache"]   = "luatz/tzcache.lua" ;
 		["luatz.tzfile"]    = "luatz/tzfile.lua" ;
 		["luatz.tzinfo"]    = "luatz/tzinfo.lua" ;

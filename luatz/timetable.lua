@@ -143,6 +143,15 @@ function timetable_methods:rfc_3339 ( )
 	return strformat ( "%04u-%02u-%02uT%02u:%02u:%06.3f" , self:unpack ( ) )
 end
 
+local strftime = require "luatz.strftime".strftime
+function timetable_methods:strftime ( format_string )
+	return strftime ( format_string , self )
+end
+
+function timetable_methods:asctime ( )
+	return self:strftime ( "%c\n" )
+end
+
 local timetable_mt = {
 	__index    = timetable_methods ;
 	__tostring = timetable_methods.rfc_3339 ;

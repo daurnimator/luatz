@@ -1,5 +1,6 @@
 local _M = {
 	parse = require "luatz.parse" ;
+	strftime = require "luatz.strftime" ;
 	timetable = require "luatz.timetable" ;
 }
 

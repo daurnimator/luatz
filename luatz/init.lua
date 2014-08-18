@@ -17,4 +17,19 @@ _M.time_in = function ( tz , now )
 	return _M.get_tz ( tz ):localize ( now )
 end
 
+--- C-like functions
+
+_M.gmtime = function ( ts )
+	return _M.timetable.new_from_timestamp ( ts ):normalise ( )
+end
+
+_M.localtime = function ( ts )
+	ts = _M.time_in ( nil , ts )
+	return _M.gmtime ( ts )
+end
+
+_M.ctime = function ( ts )
+	return _M.localtime ( ts ):asctime ( )
+end
+
 return _M

@@ -1,8 +1,7 @@
 local luatz = require "luatz.init"
-
+local time = 1234567890
 describe("strftime", function()
 	local strftime = luatz.strftime.strftime
-	local time = luatz.time()
 	for i, spec in ipairs {
 		"a", "A", "b", "B", "c", "C", "d", "D", "e", "F",
 		"g", "G", "H", "I", "j", "m", "M", "n", "p", "r",

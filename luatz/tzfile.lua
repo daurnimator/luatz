@@ -97,7 +97,7 @@ local function read_tz ( fd )
 
 		local TZ
 
-		if version == "2" then
+		if version == "2" or version == "3" then
 			--[[
 			For version-2-format timezone files, the above header and data is followed by a second header and data,
 			identical in format except that eight bytes are used for each transition time or leap-second time.
@@ -159,6 +159,17 @@ local function read_tz ( fd )
 			for use in handling instants after the last transition time stored in the file
 			(with nothing between the newlines if there is no POSIX representation for such instants).
 			]]
+
+			--[[
+			For version-3-format time zone files, the POSIX-TZ-style string may
+			use two minor extensions to the POSIX TZ format, as described in newtzset (3).
+			First, the hours part of its transition times may be signed and range from
+			-167 through 167 instead of the POSIX-required unsigned values
+			from 0 through 24.  Second, DST is in effect all year if it starts
+			January 1 at 00:00 and ends December 31 at 24:00 plus the difference
+			between daylight saving and standard time.
+			]]
+
 			assert ( assert ( fd:read ( 1 ) ) == "\n" , "Expected newline at end of version 2 header" )
 
 			TZ = assert ( fd:read ( "*l" ) )

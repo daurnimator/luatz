@@ -1,3 +1,4 @@
+local strftime = require "luatz.strftime".strftime
 local strformat = string.format
 local floor = math.floor
 local function idiv ( n , d )
@@ -143,7 +144,6 @@ function timetable_methods:rfc_3339 ( )
 	return strformat ( "%04u-%02u-%02uT%02u:%02u:%06.3f" , self:unpack ( ) )
 end
 
-local strftime = require "luatz.strftime".strftime
 function timetable_methods:strftime ( format_string )
 	return strftime ( format_string , self )
 end

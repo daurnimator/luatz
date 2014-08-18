@@ -1,13 +1,15 @@
 local _M = {
+	gettime = require "luatz.gettime" ;
 	parse = require "luatz.parse" ;
 	strftime = require "luatz.strftime" ;
 	timetable = require "luatz.timetable" ;
+	tzcache = require "luatz.tzcache" ;
 }
 
 --- Top-level aliases for common functions
 
-_M.time = require "luatz.gettime".gettime
-_M.get_tz = require "luatz.tzcache".get_tz
+_M.time = _M.gettime.gettime
+_M.get_tz = _M.tzcache.get_tz
 
 --- Handy functions
 

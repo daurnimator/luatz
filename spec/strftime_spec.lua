@@ -9,9 +9,9 @@ describe("strftime", function()
 		"y", "Y", "z", "Z" , "%"
 	} do
 		local tt = luatz.gmtime(time)
-		it("Specifier "..spec.." is equivalent to os.date", function()
-			local f = "%"..spec
-			local osdf = "!%"..spec
+		local f = "%"..spec
+		local osdf = "!%"..spec
+		it("format specifier '"..f.."' is equivalent to os.date('"..osdf.."')", function()
 			for i=1, 365*12 do
 				local t = time + 60*60*24*i
 				tt.day = tt.day + 1

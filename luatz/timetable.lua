@@ -148,7 +148,16 @@ function timetable_methods:strftime ( format_string )
 	return strftime ( format_string , self )
 end
 
-local timetable_mt = {
+local timetable_mt
+
+local function coerce_arg ( t )
+	if getmetatable ( t ) == timetable_mt then
+		return t:timestamp ( )
+	end
+	return t
+end
+
+timetable_mt = {
 	__index    = timetable_methods ;
 	__tostring = timetable_methods.rfc_3339 ;
 	__eq = function ( a , b )
@@ -156,6 +165,9 @@ local timetable_mt = {
 	end ;
 	__lt = function ( a , b )
 		return a:timestamp ( ) < b:timestamp ( )
+	end ;
+	__sub = function ( a , b )
+		return coerce_arg ( a ) - coerce_arg ( b )
 	end ;
 }
 

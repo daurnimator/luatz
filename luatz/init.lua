@@ -29,7 +29,7 @@ _M.localtime = function ( ts )
 end
 
 _M.ctime = function ( ts )
-	return _M.localtime ( ts ):asctime ( )
+	return _M.strftime.asctime ( _M.localtime ( ts ) )
 end
 
 return _M

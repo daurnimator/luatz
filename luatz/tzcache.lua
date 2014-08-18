@@ -5,10 +5,12 @@ local local_zoneinfo_path = "/etc/localtime"
 local tz_cache = { }
 
 local function name_to_zoneinfo_path ( name )
-	if name then
-		return base_zoneinfo_path .. name
-	else
+	if name == nil then
 		return local_zoneinfo_path
+	elseif name:sub ( 1 , 1 ) == "/" then
+		return name
+	else
+		return base_zoneinfo_path .. name
 	end
 end
 

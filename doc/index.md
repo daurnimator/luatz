@@ -18,6 +18,7 @@ See `gettime` for more information.
 
 Returns a timezone object (see `tzinfo` documentation) for the given `timezone_name`.
 If `timezone_name` is `nil` then the local timezone is used.
+If `timezone_name` is an absolute path, then that `tzinfo` file is used
 
 This uses the local [zoneinfo database](https://www.iana.org/time-zones); 
 names are usually of the form `Country/Largest_City` e.g. "America/New_York".

@@ -198,6 +198,11 @@ local function strftime ( format_string , timetable )
 	end ) )
 end
 
+local function asctime ( timetable )
+	return strftime ( "%c\n" , timetable )
+end
+
 return {
 	strftime = strftime ;
+	asctime = asctime ;
 }

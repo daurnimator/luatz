@@ -199,7 +199,8 @@ local function strftime ( format_string , timetable )
 end
 
 local function asctime ( timetable )
-	return strftime ( "%c\n" , timetable )
+	-- Equivalent to the format string "%c\n"
+	return t.c ( timetable , c_locale ) .. "\n"
 end
 
 return {

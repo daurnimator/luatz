@@ -95,6 +95,8 @@ local function read_tz ( fd )
 
 		local isgmt = assert ( read_flags ( fd , tzh_ttisgmtcnt ) )
 
+		local TZ
+
 		if version == "2" then
 			--[[
 			For version-2-format timezone files, the above header and data is followed by a second header and data,
@@ -157,6 +159,12 @@ local function read_tz ( fd )
 			for use in handling instants after the last transition time stored in the file
 			(with nothing between the newlines if there is no POSIX representation for such instants).
 			]]
+			assert ( assert ( fd:read ( 1 ) ) == "\n" , "Expected newline at end of version 2 header" )
+
+			TZ = assert ( fd:read ( "*l" ) )
+			if #TZ == 0 then
+				TZ = nil
+			end
 		end
 
 		for i=1, tzh_typecnt do

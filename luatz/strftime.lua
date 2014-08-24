@@ -200,7 +200,7 @@ end
 
 local function asctime ( timetable )
 	-- Equivalent to the format string "%c\n"
-	return t.c ( timetable , c_locale ) .. "\n"
+	return strformat ( t.c ( timetable , c_locale ) ) .. "\n"
 end
 
 return {

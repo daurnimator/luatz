@@ -22,3 +22,9 @@ describe("strftime", function()
 		end)
 	end
 end)
+describe("asctime", function()
+	local asctime = luatz.strftime.asctime
+	it("should format correctly", function()
+		assert.are.same("Fri Feb 13 23:31:30 2009\n", asctime(tt))
+	end)
+end)

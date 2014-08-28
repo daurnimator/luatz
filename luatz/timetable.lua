@@ -193,6 +193,9 @@ function timetable_methods:clone ( )
 end
 
 local function new_from_timestamp ( ts )
+	if type ( ts ) ~= "number" then
+		error ( "bad argument #1 to 'new_from_timestamp' (number expected, got " .. type ( ts ) .. ")" , 2 )
+	end
 	return new_timetable ( 1970 , 1 , 1 , 0 , 0 , ts )
 end
 

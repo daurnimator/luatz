@@ -1,7 +1,7 @@
 local luatz = require "luatz.init"
 local time = 1234567890
 local tt = luatz.gmtime(time)
-describe("strftime", function()
+describe("#strftime works the same as os.date", function()
 	local strftime = luatz.strftime.strftime
 	for i, spec in ipairs {
 		"a", "A", "b", "B", "c", "C", "d", "D", "e", "F",
@@ -22,7 +22,7 @@ describe("strftime", function()
 		end)
 	end
 end)
-describe("asctime", function()
+describe("#asctime", function()
 	local asctime = luatz.strftime.asctime
 	it("should format correctly", function()
 		assert.are.same("Fri Feb 13 23:31:30 2009\n", asctime(tt))

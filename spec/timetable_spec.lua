@@ -1,4 +1,4 @@
-describe ( "Time table library" , function ( )
+describe ( "Timetable library" , function ( )
 	local timetable = require "luatz.timetable"
 
 	local function native_normalise ( year , month , day )
@@ -9,7 +9,7 @@ describe ( "Time table library" , function ( )
 		})
 	end
 
-	it ( "Get day of week correct" , function ( )
+	it ( "#normalise gets #wday (day of week) correct" , function ( )
 
 		local function assert_same_wday ( year , month , day )
 			return assert.are.same (
@@ -36,7 +36,7 @@ describe ( "Time table library" , function ( )
 					) ):read "*l" ) )
 	end
 
-	it ( "Timestamp creation is valid" , function ( )
+	it ( "#timestamp creation is valid" , function ( )
 		for y=1950,2013 do
 			for m=1,12 do
 				assert.same ( native_timestamp ( y,m,1 ) , timetable.timestamp(y,m,1,0,0,0) )
@@ -44,7 +44,7 @@ describe ( "Time table library" , function ( )
 		end
 	end )
 
-	it ( "Out of range month is normalised" , function ( )
+	it ( "#normalise handles out of range #month" , function ( )
 		assert.same ( { timetable.normalise(2013,0,1,0,0,0) } , { 2012,12,1,0,0,0 } )
 	end )
 end )

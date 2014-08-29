@@ -14,7 +14,7 @@ local function os_date ( format_string , timestamp )
 	else -- Localtime
 		timestamp = get_tz ( ):localise ( timestamp )
 	end
-	local tt = new_from_timestamp ( timestamp ):normalise ( )
+	local tt = new_from_timestamp ( timestamp )
 	if format_string == "*t" then
 		return tt
 	else

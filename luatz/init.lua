@@ -20,7 +20,7 @@ end
 --- C-like functions
 
 _M.gmtime = function ( ts )
-	return _M.timetable.new_from_timestamp ( ts ):normalise ( )
+	return _M.timetable.new_from_timestamp ( ts )
 end
 
 _M.localtime = function ( ts )

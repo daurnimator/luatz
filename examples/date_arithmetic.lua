@@ -2,7 +2,7 @@ local luatz = require "luatz"
 
 -- We do this a few times ==> Convert a timestamp to timetable and normalise
 local function ts2tt ( ts )
-	return luatz.timetable.new_from_timestamp ( ts ):normalise ( )
+	return luatz.timetable.new_from_timestamp ( ts )
 end
 
 -- Get the current time in UTC

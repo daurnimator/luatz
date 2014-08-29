@@ -84,4 +84,24 @@ describe ( "Timetable library" , function ( )
 		assert.same ( { timetable.normalise(2013,42,52,0,0,0) } , { 2016,7,22,0,0,0 } )
 		assert.same ( { timetable.normalise(2013,42,52,50,0,0) } , { 2016,7,24,2,0,0 } )
 	end )
+
+	it ( "#normalise handles fractional #month" , function ( )
+		assert.same ( { timetable.normalise(2014,14.5,1,0,0,0) } , { 2015,2,15,0,0,0 } )
+		assert.same ( { timetable.normalise(2015,14.5,1,0,0,0) } , { 2016,2,15,12,0,0 } ) -- leap year, so hours is 12
+		assert.same ( { timetable.normalise(2016,14.5,1,0,0,0) } , { 2017,2,15,0,0,0 } )
+	end )
+
+	local function round_trip_add(t, field, x)
+		local before = t:clone()
+		t[field]=t[field]+x;
+		t:normalise();
+		t[field]=t[field]-x;
+		t:normalise();
+		assert.same(0, t-before)
+	end
+	it ( "#normalise round trips" , function ( )
+		round_trip_add(timetable.new(2000,2,28,0,0,0), "month", 0.5)
+		round_trip_add(timetable.new(2014,8,28,19,23,0), "month", 0.4)
+		round_trip_add(timetable.new(2014,14.5,28,0,0,0), "month", 0.4)
+	end )
 end )

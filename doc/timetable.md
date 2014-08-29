@@ -21,29 +21,29 @@ called to modify components to return to their standard range.
 Equality and comparisons should work between timetable objects.
 
 
-## `new ( year , month , day , hour , min , sec , [yday] , [wday] )`
+### `new ( year , month , day , hour , min , sec , [yday] , [wday] )`
 
 Returns a new timetable with the given contents.
 
 
-## `new_from_timestamp ( timestamp )`
+### `new_from_timestamp ( timestamp )`
 
 Returns a new (normalised) timetable, given a timestamp in seconds since the unix epoch of 
 1970-01-01.
 
 
-## `:clone ( )`
+### `:clone ( )`
 
 Returns a new independent instance of an existing timetable object.
 
 
-## `:normalise ( )`
+### `:normalise ( )`
 
 Mutates the current object's time and date components so that they lie within 'normal' 
 ranges e.g. `month` is `1`-`12`; `min` is `0`-`59`
 
 
-## `:rfc_3339 ( )` and `__tostring` metamethod
+### `:rfc_3339 ( )` and `__tostring` metamethod
 
 Returns the timetable formatted as an rfc-3339 style string.
 The timezone offset (or Z) is not appended.
@@ -51,11 +51,11 @@ The ranges of components are not checked, if you want a valid timestamp,
 `:normalise ( )` should be called first.
 
 
-## `:timestamp ( )`
+### `:timestamp ( )`
 
 Returns the timetable as the number of seconds since unix epoch (1970-01-01) as a lua number.
 
 
-## `:unpack ( )`
+### `:unpack ( )`
 
 Unpacks the timetable object; returns `year`, `month`, `day`, `hour`, `min`, `sec`, `yday`, `wday`

@@ -10,14 +10,14 @@ Uses the most precise method available (in order:)
   - [luasocket](http://w3.impa.br/~diego/software/luasocket/)'s `socket.gettime`
   - [`os.time`](http://www.lua.org/manual/5.2/manual.html#pdf-os.time)
 
-## `source`
+### `source`
 
 The library/function currently in use.
 
-## `resolution`
+### `resolution`
 
 The smallest time resolution (in seconds) available from `gettime ( )` .
 
-## `gettime ( )`
+### `gettime ( )`
 
 Returns the number of seconds since unix epoch (1970-01-01T00:00:00Z) as a lua number

@@ -8,13 +8,13 @@ The table includes the following sub modules, which have their own documentation
   - `timetable`: Class for date/time objects supporting normalisation
 
 
-## `time ( )`
+### `time ( )`
 
 Returns the current unix timestamp using the most precise source available.
 See `gettime` for more information.
 
 
-## `get_tz ( [timezone_name] )`
+### `get_tz ( [timezone_name] )`
 
 Returns a timezone object (see `tzinfo` documentation) for the given `timezone_name`.
 If `timezone_name` is `nil` then the local timezone is used.
@@ -25,7 +25,7 @@ names are usually of the form `Country/Largest_City` e.g. "America/New_York".
 Check [wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) for an example list.
 
 
-## `time_in ( timezone_name [, utc_ts] )`
+### `time_in ( timezone_name [, utc_ts] )`
 
 Returns the current time in seconds since 1970-01-01 0:00:00 in the given timezone as a string,
 (same semantics as `get_tz`) at the given UTC time (defaults to now).

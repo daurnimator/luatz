@@ -56,7 +56,7 @@ local function day_of_week ( day , month , year )
 	return ( year + leap_years_since ( year ) + sakamoto[month] + day ) % 7 + 1
 end
 
-local function increment ( tens , units , base )
+local function carry ( tens , units , base )
 	if units >= base then
 		tens  = tens + idiv ( units , base )
 		units = units % base
@@ -69,9 +69,11 @@ end
 
 -- Modify parameters so they all fit within the "normal" range
 local function normalise ( year , month , day , hour , min , sec )
-	min  , sec  = increment ( min  , sec  , 60 ) -- TODO: consider leap seconds?
-	hour , min  = increment ( hour , min  , 60 )
-	day  , hour = increment ( day  , hour , 24 )
+	-- Propagate out of range values up
+	-- e.g. if `min` is 70, `hour` increments by 1 and `min` becomes 10
+	min   , sec   = carry ( min   , sec   , 60 ) -- TODO: consider leap seconds?
+	hour  , min   = carry ( hour  , min   , 60 )
+	day   , hour  = carry ( day   , hour  , 24 )
 
 	while day <= 0 do
 		year = year - 1
@@ -80,7 +82,7 @@ local function normalise ( year , month , day , hour , min , sec )
 
 	-- Lua months start from 1, need -1 and +1 around this increment
 	month = month - 1
-	year , month = increment ( year , month , 12 )
+	year , month = carry ( year , month , 12 )
 	month = month + 1
 
 	-- This could potentially be slow if `day` is very large

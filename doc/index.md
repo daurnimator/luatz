@@ -13,6 +13,11 @@ The table includes the following sub modules, which have their own documentation
 Returns the current unix timestamp using the most precise source available.
 See `gettime` for more information.
 
+### `now ( )`
+
+Returns the current time as a timetable object
+See `timetable` for more information
+
 
 ### `get_tz ( [timezone_name] )`
 

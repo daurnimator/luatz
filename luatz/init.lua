@@ -17,6 +17,11 @@ _M.time_in = function ( tz , now )
 	return _M.get_tz ( tz ):localize ( now )
 end
 
+_M.now = function ( )
+	local ts = _M.gettime.gettime ( )
+	return _M.timetable.new_from_timestamp ( ts )
+end
+
 --- C-like functions
 
 _M.gmtime = function ( ts )

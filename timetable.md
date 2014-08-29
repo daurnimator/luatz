@@ -39,8 +39,16 @@ Returns a new independent instance of an existing timetable object.
 
 ### `:normalise ( )`
 
-Mutates the current object's time and date components so that they lie within 'normal' 
+Mutates the current object's time and date components so that are integers within 'normal'
 ranges e.g. `month` is `1`-`12`; `min` is `0`-`59`
+
+First, fractional parts are propagated down.  
+e.g. `.month=6.5` `.day=1` (which could be read as "the first day after the middle of June")
+normalises to `.month=2` `.day=16`
+
+Second, any fields outside of their normal ranges are propagated up  
+e.g. `.hour=10` `.min=100` (100 minutes past 10am)
+normalises to `.hour=11` `.min=40`
 
 
 ### `:rfc_3339 ( )` and `__tostring` metamethod

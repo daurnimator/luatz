@@ -28,11 +28,8 @@ Returns a new timetable with the given contents.
 
 ## `new_from_timestamp ( timestamp )`
 
-Returns a new timetable given a timestamp in seconds since the unix epoch of 
+Returns a new (normalised) timetable, given a timestamp in seconds since the unix epoch of 
 1970-01-01.
-
-`:normalise ( )` should probably be called before use to resolve to the current time and 
-date.
 
 
 ## `:clone ( )`

@@ -1,10 +1,17 @@
 This is a lua library for time and date manipulation.
 
-Importantly, it allows you to convert time between locations (time zones).
+Features include:
+  - Normalisation of broken down date objects
+  - Conversion between locations (time zones) using your local [zoneinfo](https://www.iana.org/time-zones) database.
+  - `stftime` formatting
 
-Documentation can be found in the `doc` sub-directory.
 
 [![Build Status](https://travis-ci.org/daurnimator/luatz.png)](https://travis-ci.org/daurnimator/luatz)
+
+
+## Usage
+
+Documentation can be found in the `doc` sub-directory.
 
 
 ## Installation

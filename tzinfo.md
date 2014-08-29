@@ -26,18 +26,18 @@ and contains the following fields:
   - `isgmt` (boolean)
 
 
-## `:find_current ( utc_ts )`
+### `:find_current ( utc_ts )`
 
 Returns the relevant `tt_info` object for the given UTC timestamp in the timezone.
 
 
-## `:localise ( utc_ts )` and `:localize ( utc_ts )`
+### `:localise ( utc_ts )` and `:localize ( utc_ts )`
 
 Convert the given UTC timestamp to the timezone.
 Returns the number of seconds since unix epoch in the given timezone.
 
 
-## `:utctime ( local_ts )`
+### `:utctime ( local_ts )`
 
 Convert the given local timestamp (seconds since unix epoch in the time zone) to a UTC timestamp.
 This may result in ambigous results, in which case multiple values are returned.

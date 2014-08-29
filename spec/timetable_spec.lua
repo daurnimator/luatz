@@ -44,7 +44,19 @@ describe ( "Timetable library" , function ( )
 		end
 	end )
 
-	it ( "#normalise handles out of range #month" , function ( )
+	it ( "#normalise handles out of range days in a #month" , function ( )
 		assert.same ( { timetable.normalise(2013,0,1,0,0,0) } , { 2012,12,1,0,0,0 } )
+		assert.same ( { timetable.normalise(2013,42,1,0,0,0) } , { 2016,6,1,0,0,0 } )
+
+		-- Correct behaviour around leap days
+		assert.same ( { timetable.normalise(2012,2,52,0,0,0) } , { 2012,3,23,0,0,0 } )
+		assert.same ( { timetable.normalise(2013,2,52,0,0,0) } , { 2013,3,24,0,0,0 } )
+
+		assert.same ( { timetable.normalise(2012,3,-2,0,0,0) } , { 2012,2,26,0,0,0 } )
+		assert.same ( { timetable.normalise(2013,3,-2,0,0,0) } , { 2013,2,27,0,0,0 } )
+
+		-- Also when more fields are out of range
+		assert.same ( { timetable.normalise(2013,42,52,0,0,0) } , { 2016,7,22,0,0,0 } )
+		assert.same ( { timetable.normalise(2013,42,52,50,0,0) } , { 2016,7,24,2,0,0 } )
 	end )
 end )

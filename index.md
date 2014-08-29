@@ -29,3 +29,13 @@ Check [wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) 
 
 Returns the current time in seconds since 1970-01-01 0:00:00 in the given timezone as a string,
 (same semantics as `get_tz`) at the given UTC time (defaults to now).
+
+
+## As in the C standard library
+
+### `gmtime ( ts )`
+
+### `localtime ( ts )`
+
+### `ctime ( ts )`
+

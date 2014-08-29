@@ -41,6 +41,8 @@ describe ( "Timetable library" , function ( )
 		assert_same_wday ( 2014 , 1 , 1 )
 		assert_same_wday ( 2014 , 1 , 6 )
 		assert_same_wday ( 2016 , 2 , 28 )
+		assert_same_wday ( 2016 , 2 , 29 )
+		assert_same_wday ( 2016 , 3 , 1 )
 	end )
 
 	local function native_timestamp ( year , month , day )
@@ -55,6 +57,16 @@ describe ( "Timetable library" , function ( )
 				assert.same ( native_timestamp ( y,m,1 ) , timetable.timestamp(y,m,1,0,0,0) )
 			end
 		end
+	end )
+
+	it ( "#normalise handles out of range days in a year" , function ( )
+		assert.same ( { timetable.normalise(2013,1,366,0,0,0) } , { 2014,1,1,0,0,0 } )
+		assert.same ( { timetable.normalise(2013,1,400,0,0,0) } , { 2014,2,4,0,0,0 } )
+		assert.same ( { timetable.normalise(2016,1,400,0,0,0) } , { 2017,2,3,0,0,0 } )
+		assert.same ( { timetable.normalise(2015,1,430,0,0,0) } , { 2016,3,5,0,0,0 } )
+		assert.same ( { timetable.normalise(2016,1,430,0,0,0) } , { 2017,3,5,0,0,0 } )
+		assert.same ( { timetable.normalise(2000,1,10000,0,0,0) } , { 2027,5,18,0,0,0 } )
+		assert.same ( { timetable.normalise(2000,1,10000000,0,0,0) } , { 29379,1,25,0,0,0 } )
 	end )
 
 	it ( "#normalise handles out of range days in a #month" , function ( )

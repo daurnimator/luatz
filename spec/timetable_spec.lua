@@ -9,6 +9,19 @@ describe ( "Timetable library" , function ( )
 		})
 	end
 
+	it ( "#is_leap is correct" , function ( )
+		assert.same ( false , timetable.is_leap ( 1 ) )
+		assert.same ( false , timetable.is_leap ( 3 ) )
+		assert.same ( true  , timetable.is_leap ( 4 ) )
+		assert.same ( true  , timetable.is_leap ( 2000 ) )
+		assert.same ( true  , timetable.is_leap ( 2004 ) )
+		assert.same ( true  , timetable.is_leap ( 2012 ) )
+		assert.same ( false , timetable.is_leap ( 2013 ) )
+		assert.same ( false , timetable.is_leap ( 2014 ) )
+		assert.same ( false , timetable.is_leap ( 2100 ) )
+		assert.same ( true  , timetable.is_leap ( 2400 ) )
+	end )
+
 	it ( "#normalise gets #wday (day of week) correct" , function ( )
 
 		local function assert_same_wday ( year , month , day )

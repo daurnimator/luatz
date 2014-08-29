@@ -16,7 +16,13 @@ end
 local sakamoto = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
 
 local function is_leap ( y )
-	return (y % 4) == 0 and (y % 100) ~= 0 or (y % 400) == 0
+	if (y % 4) ~= 0 then
+		return false
+	elseif (y % 100) ~= 0 then
+		return true
+	else
+		return (y % 400) == 0
+	end
 end
 
 local function year_length ( y )
@@ -200,6 +206,7 @@ local function new_from_timestamp ( ts )
 end
 
 return {
+	is_leap = is_leap ;
 	day_of_year = day_of_year ;
 	day_of_week = day_of_week ;
 	normalise = normalise ;

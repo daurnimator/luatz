@@ -15,7 +15,7 @@ The fields are intentionally compatible with the lua standard library's `os.date
   - `wday` (optional)
   
 timetable components may be outside of their standard range (e.g. a month component of 
-14) to faciliate arithmetic operations on date components. `:normalise ( )` can be 
+14) to facilitate arithmetic operations on date components. `:normalise ( )` can be 
 called to modify components to return to their standard range.
 
 Equality and comparisons should work between timetable objects.
@@ -37,7 +37,7 @@ date.
 
 ## `:clone ( )`
 
-Returns a new independant instance of an existing timetable object.
+Returns a new independent instance of an existing timetable object.
 
 
 ## `:normalise ( )`
@@ -50,14 +50,13 @@ ranges e.g. `month` is `1`-`12`; `min` is `0`-`59`
 
 Returns the timetable formatted as an rfc-3339 style string.
 The timezone offset (or Z) is not appended.
-The ranges of components are not checked, and if you want a valid timestamp, `:normalise 
-( )` should be called first.
+The ranges of components are not checked, if you want a valid timestamp,
+`:normalise ( )` should be called first.
 
 
 ## `:timestamp ( )`
 
-Returns the timetable as the number of seconds since unix epoch (1970-01-01) as a lua 
-number.
+Returns the timetable as the number of seconds since unix epoch (1970-01-01) as a lua number.
 
 
 ## `:unpack ( )`

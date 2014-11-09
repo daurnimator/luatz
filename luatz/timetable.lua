@@ -171,8 +171,9 @@ function timetable_methods:timestamp ( )
 end
 
 function timetable_methods:rfc_3339 ( )
-	-- %06.3f gives 3 (=6-3) digits after decimal
-	return strformat ( "%04u-%02u-%02uT%02u:%02u:%06.3f" , self:unpack ( ) )
+	local year , month , day , hour , min , sec = self:unpack ( )
+	local sec , msec = borrow ( sec , 0 , 1000 )
+	return strformat ( "%04u-%02u-%02uT%02u:%02u:%02d.%03d" , year , month , day , hour , min , sec , msec )
 end
 
 function timetable_methods:strftime ( format_string )

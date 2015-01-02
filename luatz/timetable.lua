@@ -1,8 +1,16 @@
 local strftime = require "luatz.strftime".strftime
 local strformat = string.format
 local floor = math.floor
-local function idiv ( n , d )
-	return floor ( n / d )
+local idiv do
+	-- Try and use actual integer division when available (Lua 5.3+)
+	local idiv_loader, err = (loadstring or load)([[return function(n,d) return n//d end]], "idiv")
+	if idiv_loader then
+		idiv = idiv_loader()
+	else
+		idiv = function(n, d)
+			return floor(n/d)
+		end
+	end
 end
 
 

@@ -8,6 +8,8 @@ Features include:
 
 [![Build Status](https://travis-ci.org/daurnimator/luatz.png)](https://travis-ci.org/daurnimator/luatz)
 
+Supported under Lua 5.1, 5.2, 5.3 and LuaJIT.
+
 
 ## Usage
 

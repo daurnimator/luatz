@@ -32,6 +32,10 @@ _M.source , _M.resolution , _M.gettime = (function()
 		return "socket.gettime()" , 1e-6 , socket.gettime
 	end
 
+	if ngx and ngx.now then
+		return "ngx.now()" , 1e-3 , ngx.now
+	end
+
 	return "os.time()" , 1 , os.time
 end)()
 

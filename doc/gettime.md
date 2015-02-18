@@ -8,6 +8,7 @@ Uses the most precise method available (in order:)
   	  - `clock_gettime(2)` called with `CLOCK_REALTIME`
   	  - `gettimeofday(2)`
   - [luasocket](http://w3.impa.br/~diego/software/luasocket/)'s `socket.gettime`
+  - [Openresty](http://openresty.org/)'s [`ngx.now`](http://wiki.nginx.org/HttpLuaModule#ngx.now)
   - [`os.time`](http://www.lua.org/manual/5.2/manual.html#pdf-os.time)
 
 ### `source`

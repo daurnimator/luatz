@@ -181,6 +181,7 @@ end
 function timetable_methods:rfc_3339 ( )
 	local year , month , day , hour , min , sec = self:unpack ( )
 	local sec , msec = borrow ( sec , 0 , 1000 )
+	msec = math.floor(msec)
 	return strformat ( "%04u-%02u-%02uT%02u:%02u:%02d.%03d" , year , month , day , hour , min , sec , msec )
 end
 

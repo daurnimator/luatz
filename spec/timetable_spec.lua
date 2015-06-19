@@ -105,6 +105,11 @@ describe ( "Timetable library" , function ( )
 		round_trip_add(timetable.new(2014,14.5,28,0,0,0), "month", 0.4)
 	end )
 
+	it("#rfc_3339 works with fractional milliseconds", function()
+		-- on lua 5.3 this used to throw an error due to milliseconds not being an integer
+		timetable.new_from_timestamp(1415141759.999911111):rfc_3339()
+	end)
+
 	it("#rfc_3339 doesn't round seconds up to 60 (issue #4)", function()
 		assert.same("2014-11-04T22:55:59.999", timetable.new_from_timestamp(1415141759.999911111):rfc_3339())
 		assert.same("1970-01-01T00:00:59.999", timetable.new_from_timestamp(59.9999999):rfc_3339())

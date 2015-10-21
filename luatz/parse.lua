@@ -8,7 +8,7 @@ local new_timetable = require "luatz.timetable".new
 local function rfc_3339 ( str , init )
 	local year , month , day , hour , min , sec , patt_end = str:match ( "^(%d%d%d%d)%-(%d%d)%-(%d%d)[Tt](%d%d%.?%d*):(%d%d):(%d%d)()" , init )
 	if not year then
-		error ( "Invalid RFC 3339 timestamp" )
+		return nil, "Invalid RFC 3339 timestamp"
 	end
 	year  = tonumber ( year )
 	month = tonumber ( month )

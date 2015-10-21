@@ -10,5 +10,8 @@ describe ( "Time parsing library" , function ( )
 
 		-- Missing offsets parse
 		assert.same ( timetable.new(2013,10,22,14,17,02) , (parse.rfc_3339 "2013-10-22T14:17:02") )
+
+		-- Invalid
+		assert.same(nil, (parse.rfc_3339 "an invalid timestamp"))
 	end )
 end )

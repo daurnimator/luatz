@@ -58,7 +58,7 @@ local fifteen_nulls = ("\0"):rep(15)
 local function read_tz ( fd )
 	assert ( fd:read(4) == "TZif" , "Invalid TZ file" )
 	local version = assert ( fd:read(1) )
-	if version == "\0" or version == "2" then
+	if version == "\0" or version == "2" or version == "3" then
 		local MIN_TIME = -2^32+1
 
 		assert ( assert ( fd:read(15) ) == fifteen_nulls , "Expected 15 nulls" )
@@ -117,7 +117,8 @@ local function read_tz ( fd )
 			For version-2-format timezone files, the above header and data is followed by a second header and data,
 			identical in format except that eight bytes are used for each transition time or leap-second time.
 			]]
-			assert ( fd:read(5) == "TZif2" )
+			assert(fd:read(4) == "TZif")
+			assert(fd:read(1) == version)
 			assert ( assert ( fd:read(15) ) == fifteen_nulls , "Expected 15 nulls" )
 
 			MIN_TIME = -2^64+1

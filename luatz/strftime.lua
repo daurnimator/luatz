@@ -24,7 +24,7 @@ end
 local iso_8601_week do
 	-- Years that have 53 weeks according to ISO-8601
 	local long_years = { }
-	for i, v in ipairs {
+	for _, v in ipairs {
 		  4,   9,  15,  20,  26,  32,  37,  43,  48,  54,  60,  65,  71,  76,  82,
 		 88,  93,  99, 105, 111, 116, 122, 128, 133, 139, 144, 150, 156, 161, 167,
 		172, 178, 184, 189, 195, 201, 207, 212, 218, 224, 229, 235, 240, 246, 252,
@@ -117,7 +117,7 @@ function t:M ( )
 	return "%02d" , self.min
 end
 -- New-line character ('\n')
-function t:n ( )
+function t:n ( ) -- luacheck: ignore 212
 	return "\n"
 end
 function t:p ( locale )
@@ -140,7 +140,7 @@ function t:S ( )
 	return "%02d" , self.sec
 end
 -- Horizontal-tab character ('\t')
-function t:t ( )
+function t:t ( ) -- luacheck: ignore 212
 	return "\t"
 end
 -- ISO 8601 time format (HH:MM:SS), equivalent to %H:%M:%S
@@ -176,14 +176,14 @@ function t:Y ( )
 	return "%d" , self.year
 end
 -- TODO timezones
-function t:z ( )
+function t:z ( ) -- luacheck: ignore 212
 	return "+0000"
 end
-function t:Z ( )
+function t:Z ( ) -- luacheck: ignore 212
 	return "GMT"
 end
 -- A literal '%' character.
-t["%"] = function ( self )
+t["%"] = function ( self ) -- luacheck: ignore 212
 	return "%%"
 end
 

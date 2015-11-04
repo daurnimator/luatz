@@ -32,8 +32,8 @@ _M.source , _M.resolution , _M.gettime = (function()
 		return "socket.gettime()" , 1e-6 , socket.gettime
 	end
 
-	if ngx and ngx.now then
-		return "ngx.now()" , 1e-3 , ngx.now
+	if ngx and ngx.now then -- luacheck: ignore 113
+		return "ngx.now()" , 1e-3 , ngx.now -- luacheck: ignore 113
 	end
 
 	return "os.time()" , 1 , os.time

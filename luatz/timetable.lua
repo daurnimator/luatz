@@ -3,7 +3,7 @@ local strformat = string.format
 local floor = math.floor
 local idiv do
 	-- Try and use actual integer division when available (Lua 5.3+)
-	local idiv_loader, err = (loadstring or load)([[return function(n,d) return n//d end]], "idiv")
+	local idiv_loader = (loadstring or load)([[return function(n,d) return n//d end]], "idiv") -- luacheck: ignore 113
 	if idiv_loader then
 		idiv = idiv_loader()
 	else
@@ -179,8 +179,8 @@ function timetable_methods:timestamp ( )
 end
 
 function timetable_methods:rfc_3339 ( )
-	local year , month , day , hour , min , sec = self:unpack ( )
-	local sec , msec = borrow ( sec , 0 , 1000 )
+	local year, month, day, hour, min, fsec = self:unpack()
+	local sec, msec = borrow(fsec, 0, 1000)
 	msec = math.floor(msec)
 	return strformat ( "%04u-%02u-%02uT%02u:%02u:%02d.%03d" , year , month , day , hour , min , sec , msec )
 end

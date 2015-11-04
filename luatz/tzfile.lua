@@ -218,6 +218,7 @@ local function read_tz ( fd )
 		end
 
 		local res = {
+			future = TZ;
 			[0] = {
 				transition_time = MIN_TIME ;
 				info = ttinfos [ first ] ;

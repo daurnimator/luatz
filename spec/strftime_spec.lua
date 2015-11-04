@@ -1,15 +1,15 @@
 local luatz = require "luatz.init"
 local time = 1234567890
-local tt = luatz.gmtime(time)
+local base_tt = luatz.gmtime(time)
 describe("#strftime works the same as os.date", function()
 	local strftime = luatz.strftime.strftime
-	for i, spec in ipairs {
+	for _, spec in ipairs {
 		"a", "A", "b", "B", "c", "C", "d", "D", "e", "F",
 		"g", "G", "H", "I", "j", "m", "M", "n", "p", "r",
 		"R", --[["s",]] "S", "t", "T", "u", "U", "V", "w", "W",
 		"y", "Y", "z", "Z" , "%"
 	} do
-		local tt = tt:clone()
+		local tt = base_tt:clone()
 		local f = "%"..spec
 		local osdf = "!%"..spec
 		it("format specifier '"..f.."' is equivalent to os.date('"..osdf.."')", function()
@@ -25,6 +25,6 @@ end)
 describe("#asctime", function()
 	local asctime = luatz.strftime.asctime
 	it("should format correctly", function()
-		assert.are.same("Fri Feb 13 23:31:30 2009\n", asctime(tt))
+		assert.are.same("Fri Feb 13 23:31:30 2009\n", asctime(base_tt))
 	end)
 end)

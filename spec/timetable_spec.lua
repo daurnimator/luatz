@@ -60,35 +60,35 @@ describe ( "Timetable library" , function ( )
 	end )
 
 	it ( "#normalise handles out of range days in a year" , function ( )
-		assert.same ( { timetable.normalise(2013,1,366,0,0,0) } , { 2014,1,1,0,0,0 } )
-		assert.same ( { timetable.normalise(2013,1,400,0,0,0) } , { 2014,2,4,0,0,0 } )
-		assert.same ( { timetable.normalise(2016,1,400,0,0,0) } , { 2017,2,3,0,0,0 } )
-		assert.same ( { timetable.normalise(2015,1,430,0,0,0) } , { 2016,3,5,0,0,0 } )
-		assert.same ( { timetable.normalise(2016,1,430,0,0,0) } , { 2017,3,5,0,0,0 } )
-		assert.same ( { timetable.normalise(2000,1,10000,0,0,0) } , { 2027,5,18,0,0,0 } )
-		assert.same ( { timetable.normalise(2000,1,10000000,0,0,0) } , { 29379,1,25,0,0,0 } )
+		assert.same({ 2014,1,1,0,0,0 }, { timetable.normalise(2013,1,366,0,0,0) })
+		assert.same({ 2014,2,4,0,0,0 }, { timetable.normalise(2013,1,400,0,0,0) })
+		assert.same({ 2017,2,3,0,0,0 }, { timetable.normalise(2016,1,400,0,0,0) })
+		assert.same({ 2016,3,5,0,0,0 }, { timetable.normalise(2015,1,430,0,0,0) })
+		assert.same({ 2017,3,5,0,0,0 }, { timetable.normalise(2016,1,430,0,0,0) })
+		assert.same({ 2027,5,18,0,0,0 }, { timetable.normalise(2000,1,10000,0,0,0) })
+		assert.same({ 29379,1,25,0,0,0 }, { timetable.normalise(2000,1,10000000,0,0,0) })
 	end )
 
 	it ( "#normalise handles out of range days in a #month" , function ( )
-		assert.same ( { timetable.normalise(2013,0,1,0,0,0) } , { 2012,12,1,0,0,0 } )
-		assert.same ( { timetable.normalise(2013,42,1,0,0,0) } , { 2016,6,1,0,0,0 } )
+		assert.same({ 2012,12,1,0,0,0 }, { timetable.normalise(2013,0,1,0,0,0) })
+		assert.same({ 2016,6,1,0,0,0 }, { timetable.normalise(2013,42,1,0,0,0) })
 
 		-- Correct behaviour around leap days
-		assert.same ( { timetable.normalise(2012,2,52,0,0,0) } , { 2012,3,23,0,0,0 } )
-		assert.same ( { timetable.normalise(2013,2,52,0,0,0) } , { 2013,3,24,0,0,0 } )
+		assert.same({ 2012,3,23,0,0,0 }, { timetable.normalise(2012,2,52,0,0,0) })
+		assert.same({ 2013,3,24,0,0,0 }, { timetable.normalise(2013,2,52,0,0,0) })
 
-		assert.same ( { timetable.normalise(2012,3,-2,0,0,0) } , { 2012,2,26,0,0,0 } )
-		assert.same ( { timetable.normalise(2013,3,-2,0,0,0) } , { 2013,2,27,0,0,0 } )
+		assert.same({ 2012,2,26,0,0,0 }, { timetable.normalise(2012,3,-2,0,0,0) })
+		assert.same({ 2013,2,27,0,0,0 }, { timetable.normalise(2013,3,-2,0,0,0) })
 
 		-- Also when more fields are out of range
-		assert.same ( { timetable.normalise(2013,42,52,0,0,0) } , { 2016,7,22,0,0,0 } )
-		assert.same ( { timetable.normalise(2013,42,52,50,0,0) } , { 2016,7,24,2,0,0 } )
+		assert.same({ 2016,7,22,0,0,0 }, { timetable.normalise(2013,42,52,0,0,0) })
+		assert.same({ 2016,7,24,2,0,0 }, { timetable.normalise(2013,42,52,50,0,0) })
 	end )
 
 	it ( "#normalise handles fractional #month" , function ( )
-		assert.same ( { timetable.normalise(2014,14.5,1,0,0,0) } , { 2015,2,15,0,0,0 } )
-		assert.same ( { timetable.normalise(2015,14.5,1,0,0,0) } , { 2016,2,15,12,0,0 } ) -- leap year, so hours is 12
-		assert.same ( { timetable.normalise(2016,14.5,1,0,0,0) } , { 2017,2,15,0,0,0 } )
+		assert.same({ 2015,2,15,0,0,0 } , { timetable.normalise(2014,14.5,1,0,0,0) })
+		assert.same({ 2016,2,15,12,0,0 } , { timetable.normalise(2015,14.5,1,0,0,0) }) -- leap year, so hours is 12
+		assert.same({ 2017,2,15,0,0,0 } , { timetable.normalise(2016,14.5,1,0,0,0) })
 	end )
 
 	local function round_trip_add(t, field, x)

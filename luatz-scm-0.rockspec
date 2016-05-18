@@ -10,7 +10,7 @@ description = {
 	  - Normalisation of broken down date objects
 	    - allows for complex time/date manipulation logic e.g. "what day is it in 2 days, 5 hours from now?"
 	  - Conversion between locations (time zones) using your local zoneinfo database.
-	  - stftime style formatting
+	  - strftime style formatting
 
 	All operations are possible without C extensions, though if available they may be used to increase accuracy.
 	]] ;

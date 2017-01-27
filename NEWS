@@ -1,0 +1,28 @@
+UNRELEASED
+
+  - Fix timetable normalisation carry bug (#10)
+  - Clean up of docs
+  - No longer throw errors in parse module on error (now return nil, err)
+  - Support version 3 tzfiles
+
+
+0.3 - 2015-01-02
+
+  - Lua 5.3 support
+  - Fix bug in rfc-3339 serialisation (#4)
+
+
+0.2 - 2014-08-29
+
+  - Support for fractional timetable component normalisation
+    e.g. .month=6.5, .day=1 (which could be read as "the first day after the middle of June") normalises to .month=2, .day=16
+  - Top level aliases for common operations
+  - Own implementation of stftime formatting (locales are not yet complete)
+  - Uses ljsyscall for more accurate time when available
+
+
+0.1 - 2013-11-23
+
+  - provides a `os.date` compatible class "timetable"
+  - timezone conversion
+  - rfc3339 parsing

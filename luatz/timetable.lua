@@ -76,8 +76,8 @@ local function carry ( tens , units , base )
 		tens  = tens + idiv ( units , base )
 		units = units % base
 	elseif units < 0 then
-		tens  = tens - 1 + idiv ( -units , base )
-		units = base - ( -units % base )
+		tens  = tens + idiv ( units , base )
+		units = ( base + units ) % base
 	end
 	return tens , units
 end

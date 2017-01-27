@@ -91,6 +91,13 @@ describe ( "Timetable library" , function ( )
 		assert.same({ 2017,2,15,0,0,0 } , { timetable.normalise(2016,14.5,1,0,0,0) })
 	end )
 
+	it ( "#normalise handles negative carry (issue #10)", function()
+		assert.same({ 1970,01,01,00,59,00 }, { timetable.normalise(1970,01,01,01,00,-60) })
+		assert.same({ 1970,01,01,00,58,58 }, { timetable.normalise(1970,01,01,01,00,-62) })
+		assert.same({ 1969,12,31,23,55,58 }, { timetable.normalise(1970,01,01,01,-63,-62) })
+		assert.same({ 2017,02,3,0,0,0 }, { timetable.normalise(2017,02,13,0,-14400,0) })
+	end )
+
 	local function round_trip_add(t, field, x)
 		local before = t:clone()
 		t[field]=t[field]+x;

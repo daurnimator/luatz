@@ -1,4 +1,4 @@
-# `luatz.gettime`
+## `luatz.gettime` <!-- --> {#gettime}
 
 A module to get the current time.
 
@@ -9,16 +9,18 @@ Uses the most precise method available (in order:)
   	  - `gettimeofday(2)`
   - [luasocket](http://w3.impa.br/~diego/software/luasocket/)'s `socket.gettime`
   - [Openresty](http://openresty.org/)'s [`ngx.now`](http://wiki.nginx.org/HttpLuaModule#ngx.now)
-  - [`os.time`](http://www.lua.org/manual/5.2/manual.html#pdf-os.time)
+  - [`os.time`](http://www.lua.org/manual/5.3/manual.html#pdf-os.time)
 
-### `source`
+### `source` <!-- --> {#gettime.source}
 
-The library/function currently in use.
+The library/function currently in use by [`gettime()`](#gettime.gettime).
 
-### `resolution`
 
-The smallest time resolution (in seconds) available from `gettime ( )` .
+### `resolution` <!-- --> {#gettime.resolution}
 
-### `gettime ( )`
+The smallest time resolution (in seconds) available from [`gettime()`](#gettime.gettime).
+
+
+### `gettime()` <!-- --> {#gettime.gettime}
 
 Returns the number of seconds since unix epoch (1970-01-01T00:00:00Z) as a lua number

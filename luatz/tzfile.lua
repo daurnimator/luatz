@@ -98,7 +98,7 @@ local function read_tz ( fd )
 
 		local abbreviations = assert ( fd:read ( tzh_charcnt ) )
 
-		local leap_seconds = { }
+		local leap_seconds = { } -- luacheck: ignore 241
 		for i=1, tzh_leapcnt do
 			leap_seconds [ i ] = {
 				offset = assert ( read_int32be ( fd ) ) ;

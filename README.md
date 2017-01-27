@@ -15,9 +15,11 @@ Features include:
 Supported under Lua 5.1, 5.2, 5.3 and LuaJIT.
 
 
-## Usage
+## Documentation
 
 Documentation can be found in the `doc` sub-directory.
+
+An online version can be found at https://daurnimator.github.io/luatz/
 
 
 ## Installation

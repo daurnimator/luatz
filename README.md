@@ -19,9 +19,6 @@ Documentation can be found in the `doc` sub-directory.
 
 ## Installation
 
-### via [luarocks](http://luarocks.org/)
+### via [luarocks](https://luarocks.org/modules/daurnimator/luatz)
 
     luarocks install luatz
-
-[MoonRocks link](https://rocks.moonscript.org/modules/daurnimator/luatz)
-

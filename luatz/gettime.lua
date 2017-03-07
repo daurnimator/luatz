@@ -3,7 +3,7 @@ local _M = { }
 _M.source , _M.resolution , _M.gettime = (function()
 	local has_syscall , syscall = pcall ( require , "syscall" )
 	if has_syscall then
-		if syscall.clock_gettime then
+		if syscall.clock_gettime and syscall.c.CLOCK then
 			local clock_id = syscall.c.CLOCK.REALTIME
 			local function timespec_to_number ( timespec )
 				return tonumber ( timespec.tv_sec ) + tonumber ( timespec.tv_nsec ) * 1e-9

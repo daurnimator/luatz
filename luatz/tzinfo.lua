@@ -11,9 +11,11 @@ end
 
 local tz_info_methods = { }
 local tz_info_mt = {
+	__name = "luatz.tz_info";
 	__index = tz_info_methods ;
 }
 local tt_info_mt = {
+	__name = "luatz.tt_info";
 	__tostring = function ( self )
 		return string.format ( "tt_info:%s=%d" , self.abbr , self.gmtoff )
 	end ;

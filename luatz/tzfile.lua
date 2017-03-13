@@ -3,7 +3,9 @@ local tt_info_mt = require "luatz.tzinfo".tt_info_mt
 
 local read_int32be, read_int64be
 
-if string.unpack then -- Only available in Lua 5.3+
+-- luacheck: push std max
+if string.unpack then
+	-- Only available in Lua 5.3+
 	function read_int32be(fd)
 		local data, err = fd:read(4)
 		if data == nil then return nil, err end
@@ -15,7 +17,7 @@ if string.unpack then -- Only available in Lua 5.3+
 		if data == nil then return nil, err end
 		return string.unpack(">i8", data)
 	end
-else
+else -- luacheck: pop
 	function read_int32be(fd)
 		local data, err = fd:read(4)
 		if data == nil then return nil, err end

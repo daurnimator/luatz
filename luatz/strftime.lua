@@ -8,7 +8,8 @@ local c_locale = {
 	abday = { "Sun" , "Mon" , "Tue" , "Wed" , "Thu" , "Fri" , "Sat" } ;
 	day = { "Sunday" , "Monday" , "Tuesday" , "Wednesday" , "Thursday" , "Friday" , "Saturday" } ;
 	abmon = { "Jan" , "Feb" , "Mar" , "Apr" , "May" , "Jun" , "Jul" , "Aug" , "Sep" , "Oct" , "Nov" , "Dec" } ;
-	mon = { "January" , "February" , "March" , "April" , "May" , "June" , "July" , "August" , "September" , "October" , "November" , "December" } ;
+	mon = { "January" , "February" , "March" , "April" , "May" , "June" ,
+		"July" , "August" , "September" , "October" , "November" , "December" } ;
 	am_pm = { "AM" , "PM" } ;
 }
 

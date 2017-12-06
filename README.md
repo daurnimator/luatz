@@ -10,7 +10,7 @@ Features include:
   - `strftime` style formatting
 
 
-[![Build Status](https://travis-ci.org/daurnimator/luatz.png)](https://travis-ci.org/daurnimator/luatz)
+[![Build Status](https://travis-ci.org/daurnimator/luatz.png)](https://travis-ci.org/daurnimator/luatz) [![Coverage Status](https://coveralls.io/repos/github/daurnimator/luatz/badge.svg?branch=master)](https://coveralls.io/github/daurnimator/luatz?branch=master)
 
 Supported under Lua 5.1, 5.2, 5.3 and LuaJIT.
 

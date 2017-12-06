@@ -45,11 +45,11 @@ else -- luacheck: pop
 	end
 end
 
-local function read_flags ( fd , n )
-	local data , err = fd:read ( n )
-	if data == nil then return nil , err end
+local function read_flags(fd, n)
+	local data, err = fd:read(n)
+	if data == nil then return nil, err end
 
-	local res = { }
+	local res = {}
 	for i=1, n do
 		res[i] = data:byte(i,i) ~= 0
 	end
@@ -57,60 +57,60 @@ local function read_flags ( fd , n )
 end
 
 local fifteen_nulls = ("\0"):rep(15)
-local function read_tz ( fd )
-	assert ( fd:read(4) == "TZif" , "Invalid TZ file" )
-	local version = assert ( fd:read(1) )
+local function read_tz(fd)
+	assert(fd:read(4) == "TZif", "Invalid TZ file")
+	local version = assert(fd:read(1))
 	if version == "\0" or version == "2" or version == "3" then
 		local MIN_TIME = -2^32+1
 
-		assert ( assert ( fd:read(15) ) == fifteen_nulls , "Expected 15 nulls" )
+		assert(assert(fd:read(15)) == fifteen_nulls, "Expected 15 nulls")
 
 		-- The number of UTC/local indicators stored in the file.
-		local tzh_ttisgmtcnt = assert ( read_int32be ( fd ) )
+		local tzh_ttisgmtcnt = assert(read_int32be(fd))
 
 		-- The number of standard/wall indicators stored in the file.
-		local tzh_ttisstdcnt = assert ( read_int32be ( fd ) )
+		local tzh_ttisstdcnt = assert(read_int32be(fd))
 
 		-- The number of leap seconds for which data is stored in the file.
-		local tzh_leapcnt = assert ( read_int32be ( fd ) )
+		local tzh_leapcnt = assert(read_int32be(fd))
 
 		-- The number of "transition times" for which data is stored in the file.
-		local tzh_timecnt = assert ( read_int32be ( fd ) )
+		local tzh_timecnt = assert(read_int32be(fd))
 
 		-- The number of "local time types" for which data is stored in the file (must not be zero).
-		local tzh_typecnt = assert ( read_int32be ( fd ) )
+		local tzh_typecnt = assert(read_int32be(fd))
 
 		-- The number of characters of "timezone abbreviation strings" stored in the file.
-		local tzh_charcnt = assert ( read_int32be ( fd ) )
+		local tzh_charcnt = assert(read_int32be(fd))
 
-		local transition_times = { }
+		local transition_times = {}
 		for i=1, tzh_timecnt do
-			transition_times [ i ] = assert ( read_int32be ( fd ) )
+			transition_times[i] = assert(read_int32be(fd))
 		end
-		local transition_time_ind = { assert ( fd:read ( tzh_timecnt ) ):byte ( 1 , -1 ) }
+		local transition_time_ind = {assert(fd:read(tzh_timecnt)):byte(1, -1)}
 
-		local ttinfos = { }
+		local ttinfos = {}
 		for i=1, tzh_typecnt do
-			ttinfos [ i ] = {
-				gmtoff = assert ( read_int32be ( fd ) ) ;
-				isdst  = assert ( fd:read ( 1 ) ) ~= "\0" ;
-				abbrind = assert ( fd:read ( 1 ) ):byte ( ) ;
+			ttinfos[i] = {
+				gmtoff = assert(read_int32be(fd));
+				isdst  = assert(fd:read(1)) ~= "\0";
+				abbrind = assert(fd:read(1)):byte();
 			}
 		end
 
-		local abbreviations = assert ( fd:read ( tzh_charcnt ) )
+		local abbreviations = assert(fd:read(tzh_charcnt))
 
-		local leap_seconds = { } -- luacheck: ignore 241
+		local leap_seconds = {} -- luacheck: ignore 241
 		for i=1, tzh_leapcnt do
-			leap_seconds [ i ] = {
-				offset = assert ( read_int32be ( fd ) ) ;
-				n = assert ( read_int32be ( fd ) ) ;
+			leap_seconds[i] = {
+				offset = assert(read_int32be(fd));
+				n = assert(read_int32be(fd));
 			}
 		end
 
-		local isstd = assert ( read_flags ( fd , tzh_ttisstdcnt ) )
+		local isstd = assert(read_flags(fd, tzh_ttisstdcnt))
 
-		local isgmt = assert ( read_flags ( fd , tzh_ttisgmtcnt ) )
+		local isgmt = assert(read_flags(fd, tzh_ttisgmtcnt))
 
 		local TZ
 
@@ -121,56 +121,56 @@ local function read_tz ( fd )
 			]]
 			assert(fd:read(4) == "TZif")
 			assert(fd:read(1) == version)
-			assert ( assert ( fd:read(15) ) == fifteen_nulls , "Expected 15 nulls" )
+			assert(assert(fd:read(15)) == fifteen_nulls, "Expected 15 nulls")
 
 			MIN_TIME = -2^64+1
 
 			-- The number of UTC/local indicators stored in the file.
-			tzh_ttisgmtcnt = assert ( read_int32be ( fd ) )
+			tzh_ttisgmtcnt = assert(read_int32be(fd))
 
 			-- The number of standard/wall indicators stored in the file.
-			tzh_ttisstdcnt = assert ( read_int32be ( fd ) )
+			tzh_ttisstdcnt = assert(read_int32be(fd))
 
 			-- The number of leap seconds for which data is stored in the file.
-			tzh_leapcnt = assert ( read_int32be ( fd ) )
+			tzh_leapcnt = assert(read_int32be(fd))
 
 			-- The number of "transition times" for which data is stored in the file.
-			tzh_timecnt = assert ( read_int32be ( fd ) )
+			tzh_timecnt = assert(read_int32be(fd))
 
 			-- The number of "local time types" for which data is stored in the file (must not be zero).
-			tzh_typecnt = assert ( read_int32be ( fd ) )
+			tzh_typecnt = assert(read_int32be(fd))
 
 			-- The number of characters of "timezone abbreviation strings" stored in the file.
-			tzh_charcnt = assert ( read_int32be ( fd ) )
+			tzh_charcnt = assert(read_int32be(fd))
 
-			transition_times = { }
+			transition_times = {}
 			for i=1, tzh_timecnt do
-				transition_times [ i ] = assert ( read_int64be ( fd ) )
+				transition_times[i] = assert(read_int64be(fd))
 			end
-			transition_time_ind = { assert ( fd:read ( tzh_timecnt ) ):byte ( 1 , -1 ) }
+			transition_time_ind = {assert(fd:read(tzh_timecnt)):byte(1, -1)}
 
-			ttinfos = { }
+			ttinfos = {}
 			for i=1, tzh_typecnt do
-				ttinfos [ i ] = {
-					gmtoff = assert ( read_int32be ( fd ) ) ;
-					isdst  = assert ( fd:read ( 1 ) ) ~= "\0" ;
-					abbrind = assert ( fd:read ( 1 ) ):byte ( ) ;
+				ttinfos[i] = {
+					gmtoff = assert(read_int32be(fd));
+					isdst  = assert(fd:read(1)) ~= "\0";
+					abbrind = assert(fd:read(1)):byte();
 				}
 			end
 
-			abbreviations = assert ( fd:read ( tzh_charcnt ) )
+			abbreviations = assert(fd:read(tzh_charcnt))
 
-			leap_seconds = { }
+			leap_seconds = {}
 			for i=1, tzh_leapcnt do
-				leap_seconds [ i ] = {
-					offset = assert ( read_int64be ( fd ) ) ;
-					n = assert ( read_int32be ( fd ) ) ;
+				leap_seconds[i] = {
+					offset = assert(read_int64be(fd));
+					n = assert(read_int32be(fd));
 				}
 			end
 
-			isstd = assert ( read_flags ( fd , tzh_ttisstdcnt ) )
+			isstd = assert(read_flags(fd, tzh_ttisstdcnt))
 
-			isgmt = assert ( read_flags ( fd , tzh_ttisgmtcnt ) )
+			isgmt = assert(read_flags(fd, tzh_ttisgmtcnt))
 
 			--[[
 			After the second header and data comes a newline-enclosed, POSIX-TZ-environment-variable-style string
@@ -188,20 +188,20 @@ local function read_tz ( fd )
 			between daylight saving and standard time.
 			]]
 
-			assert ( assert ( fd:read ( 1 ) ) == "\n" , "Expected newline at end of version 2 header" )
+			assert(assert(fd:read(1)) == "\n", "Expected newline at end of version 2 header")
 
-			TZ = assert ( fd:read ( "*l" ) )
+			TZ = assert(fd:read("*l"))
 			if #TZ == 0 then
 				TZ = nil
 			end
 		end
 
 		for i=1, tzh_typecnt do
-			local v = ttinfos [ i ]
-			v.abbr = abbreviations:sub ( v.abbrind+1 , v.abbrind+3 )
-			v.isstd = isstd [ i ] or false
-			v.isgmt = isgmt [ i ] or false
-			setmetatable ( v , tt_info_mt )
+			local v = ttinfos[i]
+			v.abbr = abbreviations:sub(v.abbrind+1, v.abbrind+3)
+			v.isstd = isstd[i] or false
+			v.isgmt = isgmt[i] or false
+			setmetatable(v, tt_info_mt)
 		end
 
 		--[[
@@ -222,30 +222,30 @@ local function read_tz ( fd )
 		local res = {
 			future = TZ;
 			[0] = {
-				transition_time = MIN_TIME ;
-				info = ttinfos [ first ] ;
+				transition_time = MIN_TIME;
+				info = ttinfos[first];
 			}
 		}
 		for i=1, tzh_timecnt do
-			res [ i ] = {
-				transition_time = transition_times [ i ] ;
-				info = ttinfos [ transition_time_ind [ i ]+1 ] ;
+			res[i] = {
+				transition_time = transition_times[i];
+				info = ttinfos[transition_time_ind[i]+1];
 			}
 		end
-		return setmetatable ( res , tz_info_mt )
+		return setmetatable(res, tz_info_mt)
 	else
-		error ( "Unsupported version" )
+		error("Unsupported version")
 	end
 end
 
-local function read_tzfile ( path )
-	local fd = assert ( io.open ( path , "rb" ) )
-	local tzinfo = read_tz ( fd )
-	fd:close ( )
+local function read_tzfile(path)
+	local fd = assert(io.open(path, "rb"))
+	local tzinfo = read_tz(fd)
+	fd:close()
 	return tzinfo
 end
 
 return {
-	read_tz = read_tz ;
-	read_tzfile = read_tzfile ;
+	read_tz = read_tz;
+	read_tzfile = read_tzfile;
 }

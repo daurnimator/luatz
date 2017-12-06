@@ -14,7 +14,7 @@ description = {
 
 	All operations are possible without C extensions, though if available they may be used to increase accuracy.
 	]] ;
-	license = "MIT/X11" ;
+	license = "MIT" ;
 }
 
 dependencies = {

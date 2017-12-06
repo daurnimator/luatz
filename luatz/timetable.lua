@@ -107,8 +107,12 @@ local function normalise ( year , month , day , hour , min , sec )
 	-- Add a whole year of days at a time, this is later resolved by adding months
 	-- TODO[OPTIMIZE]: This could be slow if `day` is far out of range
 	while day < 0 do
-		year = year - 1
-		day  = day + year_length ( year )
+		month = month - 1
+		if month < 0 then
+			year = year - 1
+			month = 11
+		end
+		day = day + month_length ( month + 1 , year )
 	end
 	year , month = carry ( year , month , 12 )
 

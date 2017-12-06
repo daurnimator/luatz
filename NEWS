@@ -1,6 +1,6 @@
 UNRELEASED
 
-  - Fix timetable normalisation carry bug (#10)
+  - Fix timetable normalisation carry bugs (#10, #13)
   - Clean up of docs
   - No longer throw errors in parse module on error (now return nil, err)
   - Support version 3 tzfiles

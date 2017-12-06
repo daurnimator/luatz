@@ -77,8 +77,8 @@ describe ( "Timetable library" , function ( )
 		assert.same({ 2012,3,23,0,0,0 }, { timetable.normalise(2012,2,52,0,0,0) })
 		assert.same({ 2013,3,24,0,0,0 }, { timetable.normalise(2013,2,52,0,0,0) })
 
-		assert.same({ 2012,2,26,0,0,0 }, { timetable.normalise(2012,3,-2,0,0,0) })
-		assert.same({ 2013,2,27,0,0,0 }, { timetable.normalise(2013,3,-2,0,0,0) })
+		assert.same({ 2012,2,27,0,0,0 }, { timetable.normalise(2012,3,-2,0,0,0) })
+		assert.same({ 2013,2,26,0,0,0 }, { timetable.normalise(2013,3,-2,0,0,0) })
 
 		-- Also when more fields are out of range
 		assert.same({ 2016,7,22,0,0,0 }, { timetable.normalise(2013,42,52,0,0,0) })
@@ -96,6 +96,12 @@ describe ( "Timetable library" , function ( )
 		assert.same({ 1970,01,01,00,58,58 }, { timetable.normalise(1970,01,01,01,00,-62) })
 		assert.same({ 1969,12,31,23,55,58 }, { timetable.normalise(1970,01,01,01,-63,-62) })
 		assert.same({ 2017,02,3,0,0,0 }, { timetable.normalise(2017,02,13,0,-14400,0) })
+	end )
+
+	it ( "#normalise handles negative day carry (issue #13)", function()
+		assert.same({ 2016,11,30,00,00,00 }, { timetable.normalise(2016,12,0,0,0,0) })
+		assert.same({ 2017,11,30,00,00,00 }, { timetable.normalise(2017,12,0,0,0,0) })
+		assert.same({ 2018,11,30,00,00,00 }, { timetable.normalise(2018,12,0,0,0,0) })
 	end )
 
 	local function round_trip_add(t, field, x)

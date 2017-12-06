@@ -29,5 +29,5 @@ print ( m , "6 months from now in melbourne" )
 
 -- Convert time back to utc; a daylight savings transition may have taken place!
 -- There may be 2 results, but for we'll ignore the second possibility
-local c1 , c2 = melbourne:utctime ( m:timestamp( ) )
-print ( ts2tt ( c1 ) , "6 months from now in melbourne converted to utc" )
+local c , _ = melbourne:utctime ( m:timestamp( ) )
+print ( ts2tt ( c ) , "6 months from now in melbourne converted to utc" )

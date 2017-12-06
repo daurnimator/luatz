@@ -33,10 +33,6 @@ local function is_leap ( y )
 	end
 end
 
-local function year_length ( y )
-	return is_leap ( y ) and 366 or 365
-end
-
 local function month_length ( m , y )
 	if m == 2 then
 		return is_leap ( y ) and 29 or 28

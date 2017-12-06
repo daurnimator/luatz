@@ -10,12 +10,12 @@ local function rfc_3339(str, init)
 	if not year then
 		return nil, "Invalid RFC 3339 timestamp"
 	end
-	year  = tonumber(year)
-	month = tonumber(month)
-	day   = tonumber(day)
-	hour  = tonumber(hour)
-	min   = tonumber(min)
-	sec   = tonumber(sec)
+	year  = tonumber(year, 10)
+	month = tonumber(month, 10)
+	day   = tonumber(day, 10)
+	hour  = tonumber(hour, 10)
+	min   = tonumber(min, 10)
+	sec   = tonumber(sec, 10)
 
 	local tt = new_timetable(year, month, day, hour, min, sec)
 
@@ -25,7 +25,7 @@ local function rfc_3339(str, init)
 	else
 		local hour_offset, min_offset = str:match("^([+-]%d%d):(%d%d)", patt_end)
 		if hour_offset then
-			tz_offset = tonumber(hour_offset) * 3600 + tonumber(min_offset) * 60
+			tz_offset = tonumber(hour_offset, 10) * 3600 + tonumber(min_offset, 10) * 60
 		else -- luacheck: ignore 542
 			-- Invalid RFC 3339 timestamp offset (should be Z or (+/-)hour:min)
 			-- tz_offset will be nil

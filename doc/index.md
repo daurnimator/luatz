@@ -10,7 +10,7 @@ The table includes the following sub modules, which have their own documentation
 ### `time()` <!-- --> {#luatz.time}
 
 Returns the current unix timestamp using the most precise source available.
-See [`gettime`](#luatz.gettime) for more information.
+See [`gettime`](#gettime) for more information.
 
 
 ### `now()` <!-- --> {#luatz.now}

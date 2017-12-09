@@ -2,7 +2,7 @@ package = "luatz"
 version = "scm-0"
 
 description = {
-	summary = "library for time and date manipulation." ;
+	summary = "library for time and date manipulation.";
 	detailed = [[
 	A lua library for time and date manipulation.
 
@@ -13,28 +13,28 @@ description = {
 	  - strftime style formatting
 
 	All operations are possible without C extensions, though if available they may be used to increase accuracy.
-	]] ;
-	license = "MIT" ;
+	]];
+	license = "MIT";
 }
 
 dependencies = {
-	"lua >= 5.1" ;
+	"lua >= 5.1";
 }
 
 source = {
-	url = "git://github.com/daurnimator/luatz.git" ;
+	url = "git://github.com/daurnimator/luatz.git";
 }
 
 build = {
-	type = "builtin" ;
+	type = "builtin";
 	modules = {
-		["luatz.init"]      = "luatz/init.lua" ;
-		["luatz.gettime"]   = "luatz/gettime.lua" ;
-		["luatz.parse"]     = "luatz/parse.lua" ;
-		["luatz.timetable"] = "luatz/timetable.lua" ;
-		["luatz.strftime"]  = "luatz/strftime.lua" ;
-		["luatz.tzcache"]   = "luatz/tzcache.lua" ;
-		["luatz.tzfile"]    = "luatz/tzfile.lua" ;
-		["luatz.tzinfo"]    = "luatz/tzinfo.lua" ;
-	} ;
+		["luatz.init"]      = "luatz/init.lua";
+		["luatz.gettime"]   = "luatz/gettime.lua";
+		["luatz.parse"]     = "luatz/parse.lua";
+		["luatz.timetable"] = "luatz/timetable.lua";
+		["luatz.strftime"]  = "luatz/strftime.lua";
+		["luatz.tzcache"]   = "luatz/tzcache.lua";
+		["luatz.tzfile"]    = "luatz/tzfile.lua";
+		["luatz.tzinfo"]    = "luatz/tzinfo.lua";
+	};
 }

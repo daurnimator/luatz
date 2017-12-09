@@ -16,7 +16,7 @@ describe("#strftime works the same as os.date", function()
 			for i=1, 365*12 do
 				local t = time + 60*60*24*i
 				tt.day = tt.day + 1
-				tt:normalise ( )
+				tt:normalise()
 				assert.are.same(os.date(osdf,t), strftime(f,tt))
 			end
 		end)

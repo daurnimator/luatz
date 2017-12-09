@@ -102,6 +102,12 @@ describe("Timetable library", function()
 		assert.same({2016,11,30,00,00,00}, {timetable.normalise(2016,12,0,0,0,0)})
 		assert.same({2017,11,30,00,00,00}, {timetable.normalise(2017,12,0,0,0,0)})
 		assert.same({2018,11,30,00,00,00}, {timetable.normalise(2018,12,0,0,0,0)})
+
+		assert.same({2017,2,13,0,0,0}, {timetable.normalise(2017,3,-15,0,0,0)})
+		assert.same({2016,10,1,0,0,0}, {timetable.normalise(2017,3,-150,0,0,0)})
+		assert.same({2013,1,20,0,0,0}, {timetable.normalise(2017,3,-1500,0,0,0)})
+		assert.same({1976,2,4,0,0,0}, {timetable.normalise(2017,3,-15000,0,0,0)})
+		assert.same({1606,6,23,0,0,0}, {timetable.normalise(2017,3,-150000,0,0,0)})
 	end)
 
 	local function round_trip_add(t, field, x)

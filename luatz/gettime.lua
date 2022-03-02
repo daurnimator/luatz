@@ -14,6 +14,19 @@ _M.source, _M.resolution, _M.gettime = (function()
 			end
 	end
 
+	local has_posix_time, posix_time = pcall(require, "posix.time")
+	if has_posix_time and posix_time.clock_gettime then
+		local clock_id = posix_time.CLOCK_REALTIME
+		local function timespec_to_number(timespec)
+			return tonumber(timespec.tv_sec) + tonumber(timespec.tv_nsec) * 1e-9
+		end
+		return "posix.time.clock_gettime(CLOCK_REALTIME)",
+			posix_time.clock_getres and timespec_to_number(posix_time.clock_getres(clock_id)) or 1e-9,
+			function()
+				return timespec_to_number(posix_time.clock_gettime(clock_id))
+			end
+	end
+
 	local has_unix, unix = pcall(require, "unix")
 	-- On Apple devices lunix only uses gettimeofday()
 	if has_unix and unix.clock_gettime and unix.uname and unix.uname().sysname ~= "Darwin" then

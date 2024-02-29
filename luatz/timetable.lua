@@ -3,7 +3,8 @@ local strformat = string.format
 local floor = math.floor
 local idiv do
 	-- Try and use actual integer division when available (Lua 5.3+)
-	local idiv_loader = (loadstring or load)([[return function(n,d) return n//d end]], "idiv") -- luacheck: ignore 113
+	-- use rawget instead of relying on undefined functions being nil => undefined variables trigger errors in strict, safer, etc
+	local idiv_loader = (rawget(_G, "loadstring") or rawget(_G, "load"))([[return function(n,d) return n//d end]], "idiv") -- luacheck: ignore 113
 	if idiv_loader then
 		idiv = idiv_loader()
 	else

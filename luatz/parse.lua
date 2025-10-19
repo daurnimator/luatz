@@ -6,7 +6,7 @@ local new_timetable = require "luatz.timetable".new
 -- If the timestamp is only partial (i.e. missing "Z" or time offset) then `tz_offset` will be nil
 -- TODO: Validate components are within their boundarys (e.g. 1 <= month <= 12)
 local function rfc_3339(str, init)
-	local year, month, day, hour, min, sec, patt_end = str:match("^(%d%d%d%d)%-(%d%d)%-(%d%d)[Tt](%d%d%.?%d*):(%d%d):(%d%d)()", init) -- luacheck: ignore 631
+	local year, month, day, hour, min, sec, patt_end = str:match("^(%d%d%d%d)%-(%d%d)%-(%d%d)[Tt](%d%d):(%d%d):(%d%d%.?%d*)()", init) -- luacheck: ignore 631
 	if not year then
 		return nil, "Invalid RFC 3339 timestamp"
 	end
@@ -15,7 +15,7 @@ local function rfc_3339(str, init)
 	day   = tonumber(day, 10)
 	hour  = tonumber(hour, 10)
 	min   = tonumber(min, 10)
-	sec   = tonumber(sec, 10)
+	sec   = tonumber(sec)  -- Allow fractional seconds
 
 	local tt = new_timetable(year, month, day, hour, min, sec)
 

@@ -11,6 +11,12 @@ describe("Time parsing library", function()
 		-- Missing offsets parse
 		assert.same(timetable.new(2013,10,22,14,17,02), (parse.rfc_3339 "2013-10-22T14:17:02"))
 
+		-- Fractional seconds (milliseconds) with Z suffix
+		assert.same({timetable.new(2013,10,22,14,17,2.123), 0}, {parse.rfc_3339 "2013-10-22T14:17:02.123Z"})
+
+		-- Fractional seconds with numeric offset
+		assert.same({timetable.new(2013,10,22,14,17,2.456), -5*3600}, {parse.rfc_3339 "2013-10-22T14:17:02.456-05:00"})
+
 		-- Invalid
 		assert.same(nil, (parse.rfc_3339 "an invalid timestamp"))
 	end)

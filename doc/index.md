@@ -32,13 +32,17 @@ Check [wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) 
 
 ### `time_in(timezone_name[, utc_ts])` <!-- --> {#luatz.time_in}
 
-Returns the current time in seconds since 1970-01-01 0:00:00 in the given timezone as a string,
+Returns the time in seconds since 1970-01-01 0:00:00 in the given timezone as a number,
 (same semantics as [`get_tz`](#luatz.get_tz)) at the given UTC time (defaults to now).
 
 
 ### `gmtime(ts)` <!-- --> {#luatz.gmtime}
 
-As in the C standard library
+Returns a normalised timetable for the given Unix timestamp in UTC.
+Fields follow Lua's `os.date` conventions rather than C's `struct tm`:
+`year` is the full year, `month` is 1–12, `day` is 1–31,
+`hour` is 0–23, `min` is 0–59, `wday` is 1–7 (Sunday is 1),
+and `yday` is 1–366. The `sec` field preserves fractional seconds.
 
 
 ### `localtime(ts)` <!-- --> {#luatz.localtime}

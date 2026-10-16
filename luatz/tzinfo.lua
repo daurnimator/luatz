@@ -54,9 +54,9 @@ local function find_current_local(tzinfo, ts_local)
 		local t_end   = tz_last_ob.transition_time + last_gmtoffset
 
 		-- If timestamp is before start or after end
-		if ts_local < t_start then
+		if ts_local < math.min(t_start, t_end) then
 			return tz_first
-		elseif ts_local > t_end then
+		elseif ts_local >= math.max(t_start, t_end) then
 			return tz_last
 		end
 
@@ -87,7 +87,7 @@ function tz_info_methods:utctime(ts_local)
 	else -- Local time is ambiguous
 		tz2 = self[tz2].info
 
-		return ts_local - tz2.gmtoff, ts_local - tz2.gmtoff
+		return ts_local - tz1.gmtoff, ts_local - tz2.gmtoff
 	end
 end
 

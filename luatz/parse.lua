@@ -23,9 +23,12 @@ local function rfc_3339(str, init)
 	if str:match("^[Zz]", patt_end) then
 		tz_offset = 0
 	else
-		local hour_offset, min_offset = str:match("^([+-]%d%d):(%d%d)", patt_end)
+		local sign, hour_offset, min_offset = str:match("^([+-])(%d%d):(%d%d)", patt_end)
 		if hour_offset then
 			tz_offset = tonumber(hour_offset, 10) * 3600 + tonumber(min_offset, 10) * 60
+			if sign == "-" then
+				tz_offset = -tz_offset
+			end
 		else -- luacheck: ignore 542
 			-- Invalid RFC 3339 timestamp offset (should be Z or (+/-)hour:min)
 			-- tz_offset will be nil
